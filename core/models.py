@@ -16,8 +16,7 @@ class Course(models.Model):
         return self.name
 
 class Employee(models.Model):
-    first_name = models.CharField(max_length=50, verbose_name='Имя')
-    last_name = models.CharField(max_length=50, verbose_name='Фамилия')
+    user = models.OneToOneField(User)
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
     position = models.CharField(max_length=50, verbose_name='Должность')
     courses = models.ManyToManyField(Course, verbose_name='Курс обучения')
@@ -28,23 +27,34 @@ class Employee(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.position}"
+        return f"{self.position}"
 
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
+    transaction_type = mod
+    isIncome = 
 
 
 class Attendance(models.Model):
     date = models.DateField()
+    student = 
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    class StudentStatus(models.IntegerChoices):
+        active = 1 
+        archived = 2
+
+    name = models.CharField(max_length=100)
+    course = models.ManyToManyField(Course, related_name= 'students')
+    status = models.IntegerField(choices=StudentStatus.choices, default=1)
+    phone = models.CharField(max_length=255)
 
 
 class Teacher(Employee):
+    emploee = 
     speciality = models.CharField(max_length=100)
 
 
@@ -60,6 +70,8 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+    
+class User
 
 
 
