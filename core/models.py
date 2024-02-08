@@ -43,13 +43,6 @@ class Attendance(models.Model):
     # Дополнительные поля и методы
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Дополнительные поля и методы
-
-
-
-
-class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
         active = 1 
         archived = 2
@@ -79,12 +72,6 @@ class Group(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
-
-    # Дополнительные поля и методы
-
-
-
-
 
     class Meta:
         verbose_name = 'Группа'  
