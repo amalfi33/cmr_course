@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 
 
 
-
+# Модель курса
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
     date_start = models.DateField(verbose_name='Дата начала подписки')
     date_end = models.DateField(verbose_name='Дата конца подписки')
+
 
     class Meta:
         verbose_name = 'Курс'  
@@ -19,7 +20,10 @@ class Course(models.Model):
     def __str__(self):
         return self.name
     
+# Модель учителя
 class Teacher(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     speciality = models.CharField(max_length=100)
 
     class Meta:
@@ -29,6 +33,7 @@ class Teacher(models.Model):
     def __str__(self):
         return self.speciality  
 
+# Модель работника 
 class Employee(models.Model):
     user = models.ManyToManyField(User)
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
@@ -60,7 +65,9 @@ class Student(models.Model):
         active = 1 
         archived = 2
 
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
     course = models.ManyToManyField(Course, related_name= 'students')
     status = models.IntegerField(choices=StudentStatus.choices, default=1)
     phone = models.CharField(max_length=255)
