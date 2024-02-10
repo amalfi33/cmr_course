@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Group , Course , Employee, Teacher
+from .models import Group , Course , Employee, Teacher , Student
 # Register your models here.
 
 class SlugAdmin(admin.ModelAdmin):
@@ -9,4 +9,5 @@ admin.site.register(Group)
 admin.site.register(Course)
 admin.site.register(Employee)
 admin.site.register(Teacher)
+admin.site.register(Student)
 

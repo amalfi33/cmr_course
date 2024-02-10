@@ -4,8 +4,9 @@ from .models import Course, Teacher, Student
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import StudentForm
 from .forms import TeacherForm
+from django.http import HttpResponse
+import qrcode
 
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
@@ -46,37 +47,37 @@ def delete_course(request, course_id):
 
 
 # ----------------------------------
-@staff_member_required
-def edit_course(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
+# @staff_member_required
+# def edit_course(request, course_id):
+#     course = get_object_or_404(Course, id=course_id)
     
-    if request.method == 'POST':
-        form = CourseForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = CourseForm(instance=course)
+#     if request.method == 'POST':
+#         form = CourseForm(request.POST, instance=course)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('index.html')
+#     else:
+#         form = CourseForm(instance=course)
     
-    return render(request, 'edit_course.html', {'form': form})
+#     return render(request, 'edit_course.html', {'form': form})
 # ----------------------------------
 
 
 # Ученик
 
 # ----------------------------------
-@staff_member_required 
-def create_student(request):
-    if request.method == 'POST':
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            student = form.save(commit=False)
+# @staff_member_required 
+# def create_student(request):
+#     if request.method == 'POST':
+#         form = StudentForm(request.POST)
+#         if form.is_valid():
+#             student = form.save(commit=False)
            
-            student.save()
-            return redirect('index.html')
-    else:
-        form = StudentForm()
-    return render(request, 'create_student.html', {'form': form})
+#             student.save()
+#             return redirect('index.html')
+#     else:
+#         form = StudentForm()
+#     return render(request, 'create_student.html', {'form': form})
 # ----------------------------------
 
 
@@ -94,21 +95,21 @@ def delete_student(request, student_id):
 
 
 # ----------------------------------
-@staff_member_required
-def edit_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
+# @staff_member_required
+# def edit_student(request, student_id):
+#     student = get_object_or_404(Student, id=student_id)
     
-    if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = StudentForm(instance=student)
+#     if request.method == 'POST':
+#         form = StudentForm(request.POST, instance=student)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('index.html')
+#     else:
+#         form = StudentForm(instance=student)
     
-    return render(request, 'edit_student.html', {'form': form})
-def attendance(request):
-    return render(request)
+#     return render(request, 'edit_student.html', {'form': form})
+# def attendance(request):
+#     return render(request)
 # ----------------------------------
 
 
@@ -180,4 +181,7 @@ def logout_site(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('index')
+
+
+
 
