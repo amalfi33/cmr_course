@@ -40,14 +40,6 @@ class Transaction(models.Model):
 class Attendance(models.Model):
     date = models.DateField()
 
-    # Дополнительные поля и методы
-
-class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Дополнительные поля и методы
-
-
-
 
 class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
@@ -62,29 +54,16 @@ class Student(models.Model):
     qr = models.ImageField(upload_to= 'students_qr/', null=True)
 
 
-class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Дополнительные поля и методы
-
 class Teacher(Employee):
     speciality = models.CharField(max_length=100)
     # Дополнительные поля и методы
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    # Дополнительные поля и методы
 
 class Group(models.Model):
     name = models.CharField(max_length=100)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    Course = models.ForeignKey(Course, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
-
-    # Дополнительные поля и методы
-
-
-
-
 
     class Meta:
         verbose_name = 'Группа'  
