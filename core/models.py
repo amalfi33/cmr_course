@@ -16,7 +16,6 @@ class Course(models.Model):
         return self.name
 
 class Employee(models.Model):
-    user = models.OneToOneField(User)
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
     position = models.CharField(max_length=50, verbose_name='Должность')
     courses = models.ManyToManyField(Course, verbose_name='Курс обучения')
@@ -33,13 +32,10 @@ class Employee(models.Model):
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    transaction_type = mod
-    isIncome = 
 
 
 class Attendance(models.Model):
     date = models.DateField()
-    student = 
 
 
 class Student(models.Model):
@@ -54,7 +50,6 @@ class Student(models.Model):
 
 
 class Teacher(Employee):
-    emploee = 
     speciality = models.CharField(max_length=100)
 
 
@@ -71,7 +66,6 @@ class Group(models.Model):
     def __str__(self):
         return self.name
     
-class User
 
 
 

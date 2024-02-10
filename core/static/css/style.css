@@ -190,6 +190,19 @@ aside .sidebar a.active{
     color: var(--color-primary);
     background-color: var(--color-light);
     margin-left: 0;
+    
+}
+
+aside .sidebar a.message{
+    width: 100%;
+    color: var(--color-primary);
+    margin-left: 0;
+}
+
+aside .sidebar a.message::before{
+    content: '';
+    width: 6px;
+    height: 18px;
 }
 
 aside .sidebar a.active::before{
