@@ -1,20 +1,20 @@
 const Orders = [
     {
-        productName: 'JavaScript Tutorial',
-        productNumber: '85743',
-        paymentStatus: 'Due',
-        status: 'Pending'
+        productName: 'BACK-END',
+        productNumber: 'Улугбек',
+        paymentStatus: 'Наличные',
+        status: 'Оплачен'
     },
     {
-        productName: 'CSS Full Course',
-        productNumber: '97245',
-        paymentStatus: 'Refunded',
-        status: 'Declined'
+        productName: 'CSS полный курс',
+        productNumber: 'Амаль',
+        paymentStatus: 'Картой',
+        status: 'Не оплачен'
     },
     {
-        productName: 'Flex-Box Tutorial',
-        productNumber: '36452',
-        paymentStatus: 'Paid',
-        status: 'Active'
+        productName: 'Верстка сайтов',
+        productNumber: 'Боря',
+        paymentStatus: 'Наличные',
+        status: 'Оплачен'
     },
 ]

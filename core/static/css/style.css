@@ -190,6 +190,19 @@ aside .sidebar a.active{
     color: var(--color-primary);
     background-color: var(--color-light);
     margin-left: 0;
+    
+}
+
+aside .sidebar a.message{
+    width: 100%;
+    color: var(--color-primary);
+    margin-left: 0;
+}
+
+aside .sidebar a.message::before{
+    content: '';
+    width: 6px;
+    height: 18px;
 }
 
 aside .sidebar a.active::before{
@@ -705,4 +718,28 @@ main .recent-orders a{
         font-size: 2rem;
     }
 
+}
+
+
+/* Карточки курсов */
+
+.course-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.course-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.course-description {
+    font-size: 14px;
+    color: #666;
+}
+.course-details {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #888;
 }

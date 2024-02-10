@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 
 
 
-
-
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
@@ -40,11 +38,11 @@ class Employee(models.Model):
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
-def __str__(self):
+    def __str__(self):
     # Получаем первого пользователя, связанного с этим сотрудником
-    user = self.user.first()
+        user = self.user.first()
     # Если пользователь существует, возвращаем его имя, иначе пустую строку
-    return f"{user.first_name if user else ''}"
+        return f"{user if user else ''}"
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -59,13 +57,12 @@ class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
         active = 1 
         archived = 2
-
     name = models.CharField(max_length=100)
     course = models.ManyToManyField(Course, related_name= 'students')
     status = models.IntegerField(choices=StudentStatus.choices, default=1)
     phone = models.CharField(max_length=255)
-    code = models.CharField(max_length=8, null = True)
     qr = models.ImageField(upload_to= 'students_qr/', null=True)
+    code = models.CharField(max_length=8, null = True)
 
 
 class Group(models.Model):
@@ -81,5 +78,4 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
-    
 
