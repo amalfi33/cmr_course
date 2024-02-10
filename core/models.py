@@ -38,11 +38,11 @@ class Employee(models.Model):
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
-def __str__(self):
+    def __str__(self):
     # Получаем первого пользователя, связанного с этим сотрудником
-    user = self.user.first()
+        user = self.user.first()
     # Если пользователь существует, возвращаем его имя, иначе пустую строку
-    return f"{user.first_name if user else ''}"
+        return f"{user if user else ''}"
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
