@@ -23,3 +23,8 @@ class TeacherForm(forms.ModelForm):
         model = Teacher
         fields = ['courses_taught']
 
+# Форма авторизации
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Имя пользователя')
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+

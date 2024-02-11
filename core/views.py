@@ -4,7 +4,7 @@ from .models import Course, Teacher, Student , Employee
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm
+from .forms import TeacherForm , LoginForm ,  CourseForm
 from django.http import HttpResponse
 import qrcode
 
@@ -169,21 +169,26 @@ def login_site(request):
     if request.user.is_authenticated:
         return redirect('index')
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username = username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            message = 'Имя пользоватаеля или пароль не верный!!!!!!!!!!!'
-            return render(request, 'login.html', {'message': message})
-    return render(request, 'login.html')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                message = 'Имя пользователя или пароль неверны!'
+                return render(request, 'login.html', {'form': form, 'message': message})
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
 
+@login_required
 def logout_site(request):
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
     return redirect('index')
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 
 
 
