@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CourseForm
-from .models import Course, Teacher, Student
+from .models import Course, Teacher, Student , Employee
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -13,7 +13,10 @@ import qrcode
 
 
 def index(request):
-    return render(request, 'index.html')
+    employees = Employee.objects.all()
+    courses = Course.objects.all()
+    context = {'courses': courses ,'employees': employees}
+    return render(request, 'index.html', context)
 
 # --------КУРСЫ---------
 

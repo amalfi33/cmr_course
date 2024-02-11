@@ -72,10 +72,8 @@
         <main>
             <h1>Analytics</h1>
             <!-- Analyses -->
-           
-            <!-- End of Analyses -->
-
-            <!-- New Users Section -->
+            
+            <!-- End of Analyses -->           <!-- New Users Section -->
             <div class="new-users">
                 <h2>Наши курсы</h2>
                 <div class="user-list">
@@ -83,14 +81,20 @@
                         <div class="course-title">IT - BACK-END</div>
                         <div class="course-description">Описание курса: Python, Django</div>
                         <div class="course-details">
-                            <div>Преподаватель: Улугбек </div>
+                            {% for course in courses %}
+                                <h2>{{ course.name }}</h2>
+                                <p>Учитель: {{ course.user }}</p>
+                                {% endfor %}
+                            <!-- <div>Преподаватель: {{ course.name }} </div>
                             <div>Длительность: 7 месяцов</div>
-                            <div>Возраст: 12-20 </div>
+                            <div>Возраст: 12-20 </div> -->
                         </div>
                         <button class="btn">Записаться</button>
-                    </div>  
+                    </div>
+                    
             </div>
             <!-- End of New Users Section -->
+
 
             <!-- Recent Orders Table -->
             <div class="recent-orders">

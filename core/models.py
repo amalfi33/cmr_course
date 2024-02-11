@@ -7,11 +7,22 @@ from PIL import Image , ImageDraw
 from django.core.files import File
 
 
+class Teacher(models.Model):
+    speciality = models.CharField(max_length=100, verbose_name='Специальность')
+
+    class Meta:
+        verbose_name = 'Преподаватель'
+        verbose_name_plural = 'Преподаватели'
+
+    def __str__(self) -> str:
+        return self.speciality
+
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
     date_start = models.DateField(verbose_name='Дата начала подписки')
     date_end = models.DateField(verbose_name='Дата конца подписки')
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
 
     class Meta:
         verbose_name = 'Курс'  
@@ -19,16 +30,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
-    
-class Teacher(models.Model):
-    speciality = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name = 'Учитель'
-        verbose_name_plural = 'Учитель'
-
-    def __str__(self):
-        return self.speciality  
 
 class Employee(models.Model):
     user = models.ManyToManyField(User)
@@ -42,9 +43,7 @@ class Employee(models.Model):
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-    # Получаем первого пользователя, связанного с этим сотрудником
         user = self.user.first()
-    # Если пользователь существует, возвращаем его имя, иначе пустую строку
         return f"{user if user else ''}"
 
 class Transaction(models.Model):
@@ -87,10 +86,10 @@ class Student(models.Model):
 
 
 class Group(models.Model):
-    name = models.CharField(max_length=100)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    category = models.ForeignKey(Course, on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student)
+    name = models.CharField(max_length=100 , verbose_name = 'Название группы')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
+    category = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name = 'Курс')
+    students = models.ManyToManyField(Student , verbose_name= 'Ученики')
 
     class Meta:
         verbose_name = 'Группа'  
