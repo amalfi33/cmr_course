@@ -14,6 +14,9 @@ class Teacher(models.Model):
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
 
+
+# Модель курса
+
     def __str__(self) -> str:
         return self.speciality
 
@@ -24,6 +27,7 @@ class Course(models.Model):
     date_end = models.DateField(verbose_name='Дата конца подписки')
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
 
+
     class Meta:
         verbose_name = 'Курс'  
         verbose_name_plural = 'Курсы'
@@ -31,6 +35,11 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+    
+
+
+
+# Модель работника 
 class Employee(models.Model):
     user = models.ManyToManyField(User)
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
@@ -64,6 +73,7 @@ class Student(models.Model):
     status = models.IntegerField(choices=StudentStatus.choices, default=1, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
+
 
     class Meta:
         verbose_name = 'Ученик'
