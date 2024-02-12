@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CourseForm
-from .models import Course, Teacher, Student
+from .models import Course, Teacher, Student , Employee
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import StudentForm
-from .forms import TeacherForm
-from django.contrib.auth.decorators import login_required
-
-
+from .forms import TeacherForm , LoginForm ,  CourseForm, StudentForm
+from django.http import HttpResponse
+import qrcode
+from django.template import RequestContext
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
 
 def index(request):
-    return render(request, 'index.html')
+    employees = Employee.objects.all()
+    courses = Course.objects.all()
+    context = {'courses': courses ,'employees': employees}
+    return render(request, 'index.html', context)
 
 # --------КУРСЫ---------
 
@@ -166,24 +168,32 @@ def login_site(request):
     if request.user.is_authenticated:
         return redirect('index')
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username = username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            message = 'Имя пользоватаеля или пароль не верный!!!!!!!!!!!'
-            return render(request, 'login.html', {'message': message})
-    return render(request, 'login.html')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                message = 'Имя пользователя или пароль неверны!'
+                return render(request, 'login.html', {'form': form, 'message': message})
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
 
+@login_required
 def logout_site(request):
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
     return redirect('index')
+
+def base(request):
+    return render(request, 'base.html', context_instance=RequestContext(request))
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+
+
+
 
 
 # нужно 
-@login_required
-def index(request):
-    return render(request, 'base.html')

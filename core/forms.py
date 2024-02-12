@@ -16,11 +16,13 @@ class CourseForm(forms.ModelForm):
 
 
 
+
 # Студент форма
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['first_name', 'last_name', 'email'] 
+        fields = ['name', 'course', 'status', 'phone'] 
+
 
 # Учитель форма
 class TeacherForm(forms.ModelForm):
@@ -28,5 +30,11 @@ class TeacherForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['first_name', 'last_name' ,'courses_taught']
+        fields = ['speciality']
+
+# Форма авторизации
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Имя пользователя')
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+
 
