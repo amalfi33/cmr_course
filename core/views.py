@@ -173,9 +173,8 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')  # Перенаправление на index.html
+            return redirect('index')
         else:
-            # Вывод ошибки при неудачном входе
             return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
     return render(request, 'base.html')
 

@@ -304,24 +304,27 @@
             <input type="text" id="username" name="username" class="form-control-input" required>
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group"> -->
             <label for="password">Пароль:</label>
             <input type="password" id="password" class="form-control-input" name="password" required>
             <div class="help-block with-errors"></div>
+            <button class="opacity" type="submit" >Отправить</button>   
           </div>
-          <div class="form-group">
-              <button type="submit" class="form-control-submit-button" >Вход</button>
-          </div>
-          </form>
+        </form>
       </div>
         </div>
-      </div>
+        <form action="{% url 'login_site' %}" method="POST">
+            {% csrf_token %}
+          <input type="text" placeholder="Логин" name="username" required class="form-control-input"/>
+          <input type="password" placeholder="Пароль" name="password" required class="form-control-input"/>
+          <button class="opacity" type="submit" >Отправить</button>
 
+        </form>
       
 
       
     <!-- Scripts -->
-    <script src="{% static 'js/jquery.min.js' %}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>     
     <script src="{% static 'js/popper.min.js' %}"></script> <!-- Popper tooltip library for Bootstrap -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script> <!-- Bootstrap framework -->
     <script src="{% static 'js/jquery.easing.min.js' %}"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
