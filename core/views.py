@@ -4,10 +4,12 @@ from .models import Course, Teacher, Student , Employee
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm ,  CourseForm, StudentForm
+from .forms import TeacherForm , CourseForm, StudentForm
 from django.http import HttpResponse
+from django.contrib import messages
 import qrcode
-from django.template import RequestContext
+
+
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
 
@@ -110,10 +112,8 @@ def edit_student(request, student_id):
         form = StudentForm(instance=student)
     
     return render(request, 'edit_student.html', {'form': form})
-
-
-# def attendance(request):
-#     return render(request)
+def attendance(request):
+    return render(request)
 # ----------------------------------
 
 
@@ -173,29 +173,30 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            # Пользователь вошел успешно, перенаправьте его на нужную страницу
+            return redirect('index')  # Замените 'index' на имя вашего представления
         else:
-            return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
-    return render(request, 'base.html')
-
-
-
-# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+            # Неверные учетные данные, показать сообщение об ошибке
+            return render(request, 'index.html', {'error_message': 'Неверные учетные данные'})
+    else:
+        # Если запрос не методом POST, показать форму входа
+        return render(request, 'index.html')
+    
 @login_required
 def logout_site(request):
     logout(request)
     return redirect('index')
-
-
-def base(request):
-    return render(request, 'base.html')
-    
-
-
-
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 
 
 
 
 
 # нужно 
+@login_required
+
+def index(request):
+    return render(request, 'index.html')
+
+def base(request):
+    return render(request, 'base.html')

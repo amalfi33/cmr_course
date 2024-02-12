@@ -403,47 +403,34 @@
 
 // модалка вход
 
-document.getElementById('openModalBtn').addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'block';
-  });
+$(document).ready(function(){
+    // Показываем модальное окно при клике на ссылку входа
+    $("#showLogin").click(function(){
+      $("#loginModal").show();
+    });
   
-  document.getElementsByClassName('close')[0].addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'none';
-  });
+    // Закрываем модальное окно при клике на крестик или за его пределами
+    $(".close, .modal").click(function(){
+      $("#loginModal").hide();
+    });
   
-  window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('loginModal')) {
-      document.getElementById('loginModal').style.display = 'none';
-    }
-  });
-
-
-  document.getElementById('openModalBtn2').addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'block';
-  });
+    // Отправка данных формы через AJAX при отправке
+    $("#loginForm").submit(function(event){
+      event.preventDefault(); // Отменяем стандартное действие формы
   
-  document.getElementsByClassName('close')[0].addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'none';
-  });
-  
-  window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('loginModal')) {
-      document.getElementById('loginModal').style.display = 'none';
-    }
-  });
-
-
-
-  document.getElementById('openModalBtn3').addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'block';
-  });
-  
-  document.getElementsByClassName('close')[0].addEventListener('click', function() {
-    document.getElementById('loginModal').style.display = 'none';
-  });
-  
-  window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('loginModal')) {
-      document.getElementById('loginModal').style.display = 'none';
-    }
+      var formData = $(this).serialize(); // Получаем данные формы
+      $.ajax({
+        type: "POST",
+        url: "{% url 'login' %}", // Путь к представлению входа
+        data: formData,
+        success: function(response){
+          // Обновляем страницу или выполняем другие действия при успешном входе
+          location.reload();
+        },
+        error: function(xhr){
+          // Выводим сообщение об ошибке входа
+          $("#loginError").text("Неверные учетные данные").show();
+        }
+      });
+    });
   });
