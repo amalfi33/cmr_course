@@ -3,11 +3,9 @@ from .import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('', views.base, name='base'),
-    path('accounts/login/', views.login, name='login'),
-    path('accounts/logout/', views.logout, name='logout'),
-    path('login',views.login_site, name = 'login '),
+    path('index/', views.index, name='index'),
+    path('accounts/logout/', views.logout_site, name='logout'),
+    path('', views.login_site, name='login_site'),
 ]
 
 

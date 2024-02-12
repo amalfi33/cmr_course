@@ -4,7 +4,7 @@ from .models import Course, Teacher, Student , Employee
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm , LoginForm ,  CourseForm, StudentForm
+from .forms import TeacherForm ,  CourseForm, StudentForm
 from django.http import HttpResponse
 import qrcode
 from django.template import RequestContext
@@ -110,8 +110,10 @@ def edit_student(request, student_id):
         form = StudentForm(instance=student)
     
     return render(request, 'edit_student.html', {'form': form})
-def attendance(request):
-    return render(request)
+
+
+# def attendance(request):
+#     return render(request)
 # ----------------------------------
 
 
@@ -165,32 +167,33 @@ def edit_teacher(request, teacher_id):
 
 # Авторизация
 def login_site(request):
-    if request.user.is_authenticated:
-        return redirect('index')
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index')
-            else:
-                message = 'Имя пользователя или пароль неверны!'
-                return render(request, 'login.html', {'form': form, 'message': message})
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')  # Перенаправление на index.html
+        else:
+            # Вывод ошибки при неудачном входе
+            return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
+    return render(request, 'base.html')
 
+
+
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 @login_required
 def logout_site(request):
     logout(request)
     return redirect('index')
 
+
 def base(request):
-    return render(request, 'base.html', context_instance=RequestContext(request))
-# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+    return render(request, 'base.html')
+    
+
+
+
 
 
 
