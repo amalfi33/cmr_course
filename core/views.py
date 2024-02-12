@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import StudentForm
 from .forms import TeacherForm
+from django.contrib.auth.decorators import login_required
 
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
@@ -181,3 +182,8 @@ def logout_site(request):
         logout(request)
     return redirect('index')
 
+
+# нужно 
+@login_required
+def index(request):
+    return render(request, 'base.html')
