@@ -173,13 +173,11 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Пользователь вошел успешно, перенаправьте его на нужную страницу
-            return redirect('index')  # Замените 'index' на имя вашего представления
+            return redirect('index')  
         else:
-            # Неверные учетные данные, показать сообщение об ошибке
+
             return render(request, 'base.html', {'error_message': 'Неверные учетные данные'})
     else:
-        # Если запрос не методом POST, показать форму входа
         return render(request, 'base.html')
     
 @login_required

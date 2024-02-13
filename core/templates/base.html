@@ -29,6 +29,7 @@
     <link href="{% static 'css/swiper.css' %}" rel="stylesheet">
 	<link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
 	<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	
 	<!-- Favicon  -->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -81,7 +82,10 @@
 
                 </ul>
                 <span class="nav-item">
-                    <button class="btn-outline-sm" id="openModalBtn">Вход</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Launch static backdrop modal
+                      </button>
+                      
                 </span>
             </div>
         </div> <!-- end of container -->
@@ -101,7 +105,9 @@
                         <div class="text-container">
                             <h1>Progress - учебный центр</h1>
                             <p class="p-large">Для того что-бы присоеденится к нашим курсам вы должны проити регистрацию позвонив к нам или же прийти в наш офис. <br> <br> Если вы уже присоеденились к нам войдите в ваш аккаунт!</p>
-                            <button class="btn-solid-lg page-scroll" id="openModalBtn2">Войти</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Launch static backdrop modal
+                              </button>
                         </div> <!-- end of text-container -->
                     </div> <!-- end of col -->
                     <div class="col-lg-6 col-xl-7">
@@ -166,6 +172,12 @@
                     </div>
                     <!-- end of card -->
 
+                 <!-- Button trigger modal -->
+
+  <!-- Modal -->
+ 
+                      
+                    
                     <!-- Card -->
                     <div class="card">
                         <div class="card-image">
@@ -218,7 +230,9 @@
                                 <div class="media-body">Адрес: ул. Мустакиллик, 17 (Ор-р): Кинотеатр "Бухара"</div>
                             </li>
                         </ul>
-                        <button class="btn-solid-reg page-scroll" id="openModalBtn3">Войти</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Launch static backdrop modal
+                          </button>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
@@ -287,34 +301,43 @@
 
 
 
-
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'login_site' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+              <label  for="username">Логин:</label>
+              <input type="text" id="username" name="username" class="form-control-input" required>
+              <div class="help-block with-errors"></div>
+            </div>
+            <!-- <div class="form-group"> -->
+              <label for="password">Пароль:</label>
+              <input type="password" id="password" class="form-control-input" name="password" required>
+              <div class="help-block with-errors"></div>
+              <button class="opacity" type="submit" >Отправить</button>   
+            </div>
+          </form>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
 
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Вход в аккаунт</h2>
-          <div class="form-container">
-              <form id="logInForm" action="" data-toggle="validator" data-focus="false" method="POST">
-                  <div class="form-group">
-            <label  for="username">Логин:</label>
-            <input type="text" id="username" name="username" class="form-control-input" required>
-            <div class="help-block with-errors"></div>
-          </div>
-          <div class="form-group">
-            <label for="password">Пароль:</label>
-            <input type="password" id="password" class="form-control-input" name="password" required>
-            <div class="help-block with-errors"></div>
-            <button class="opacity" type="submit" >Отправить</button>   
-          </div>
-        </form>
-      </div>
-        </div>
+
+       
       
 
       
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>     
     <script src="{% static 'js/popper.min.js' %}"></script> <!-- Popper tooltip library for Bootstrap -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script> <!-- Bootstrap framework -->
