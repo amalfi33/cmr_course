@@ -177,10 +177,10 @@ def login_site(request):
             return redirect('index')  # Замените 'index' на имя вашего представления
         else:
             # Неверные учетные данные, показать сообщение об ошибке
-            return render(request, 'index.html', {'error_message': 'Неверные учетные данные'})
+            return render(request, 'base.html', {'error_message': 'Неверные учетные данные'})
     else:
         # Если запрос не методом POST, показать форму входа
-        return render(request, 'index.html')
+        return render(request, 'base.html')
     
 @login_required
 def logout_site(request):

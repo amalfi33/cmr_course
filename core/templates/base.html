@@ -291,11 +291,9 @@
     
 
 
-    <!-- <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal">
         <div class="modal-content">
-          
           <span class="close">&times;</span>
-          
           <h2>Вход в аккаунт</h2>
           <div class="form-container">
               <form id="logInForm" action="" data-toggle="validator" data-focus="false" method="POST">
@@ -313,30 +311,6 @@
         </form>
       </div>
         </div>
-        <form action="" method="POST">
-            
-          <input type="text" placeholder="Логин" name="username" required class="form-control-input"/>
-          <input type="password" placeholder="Пароль" name="password" required class="form-control-input"/>
-          <button class="opacity" type="submit" >Отправить</button> -->
-
-
-          <div id="loginModal" class="modal">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <h2>Вход</h2>
-              <form id="loginForm" method="POST" action="{% url 'login_site' %}" >
-                {% csrf_token %}
-                <input type="text" name="username" placeholder="Имя пользователя"><br>
-                <input type="password" name="password" placeholder="Пароль"><br>
-                <button type="submit">Войти</button>
-              </form>
-              <p id="loginError" style="display: none; color: red;"></p>
-            </div>
-          </div>
-
-
-
-        </form>
       
 
       
