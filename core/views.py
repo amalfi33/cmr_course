@@ -112,8 +112,10 @@ def edit_student(request, student_id):
         form = StudentForm(instance=student)
     
     return render(request, 'edit_student.html', {'form': form})
+
+
 def attendance(request):
-    return render(request)
+    return redirect(request,)
 # ----------------------------------
 
 

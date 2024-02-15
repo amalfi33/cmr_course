@@ -4,9 +4,10 @@ from .views import login_site
 
 
 urlpatterns = [
+    path('atendence/<str:code>/', views.attendance, name='atendence'),
     path('', views.index, name='index'),
     path('logout/', views.logout_site, name='logout'),
-    path('accounts/login/', login_site, name='login_site'),
+    path('accounts/login/', views.login_site, name='login_site'),
 ]
 
 

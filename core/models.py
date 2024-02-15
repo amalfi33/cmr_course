@@ -25,7 +25,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
     date_start = models.DateField(verbose_name='Дата начала подписки')
     date_end = models.DateField(verbose_name='Дата конца подписки')
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Учитель')
 
 
     class Meta:
@@ -37,15 +37,13 @@ class Course(models.Model):
 
     
 
-
-
 # Модель работника 
 class Employee(models.Model):
+    # teacher = models.ManyToManyField(Teacher, verbose_name='Учитель')
     user = models.ManyToManyField(User)
-    phone_number = models.CharField(max_length=20, verbose_name='Номер телефона')
+    phone_number = models.IntegerField(verbose_name='Номер телефона')
     speciality = models.ManyToManyField(Teacher,verbose_name='Должность')
     courses = models.ManyToManyField(Course, verbose_name='Курс обучения')
-    salary = models.IntegerField(verbose_name='Зарплата')
 
     class Meta:
         verbose_name = 'Сотрудник'
@@ -55,13 +53,7 @@ class Employee(models.Model):
         user = self.user.first()
         return f"{user if user else ''}"
 
-class Transaction(models.Model):
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
 
-
-class Attendance(models.Model):
-    date = models.DateField()
 
 
 class Student(models.Model):
@@ -73,6 +65,7 @@ class Student(models.Model):
     status = models.IntegerField(choices=StudentStatus.choices, default=1, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
+    code = models.CharField(max_length=20, blank=True)
 
 
     class Meta:
@@ -93,6 +86,7 @@ class Student(models.Model):
         self.qr_code.save(fname,File(buffer), save=False)
         canvas.close()
         super().save(*args, **kwargs) 
+        
 
 
 class Group(models.Model):
@@ -107,5 +101,17 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+
+class Attendance(models.Model):
+    date = models.DateField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
+
+class Transaction(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null = True)
+    is_income = models.BooleanField(default=True) 
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null = True)
 
 
