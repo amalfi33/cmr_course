@@ -82,7 +82,7 @@
                         <div class="course-description">Описание курса: Python, Django</div>
                         <div class="course-details">
                             {% for course in courses %}
-                                <h2>{{ course.name }}</h2>
+                                <h2>{{ employee.teacher }}</h2>
                                 <p>Учитель: {{ course.user }}</p>
                                 {% endfor %}
                             <!-- <div>Преподаватель: {{ course.name }} </div>
@@ -153,7 +153,7 @@
             <div class="user-profile">
                 <div class="logo">
                     <img src="1">
-                    <h2>Имя пользователя</h2>
+                    <h2>{{employee.teacher.user.name}}</h2>
                     <p>Учитель, ученик, админ</p>
                 </div>
             </div>
