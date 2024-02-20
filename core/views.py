@@ -175,7 +175,6 @@ def login_site(request):
             login(request, user)
             return redirect('index')  
         else:
-
             return render(request, 'base.html', {'error_message': 'Неверные учетные данные'})
     else:
         return render(request, 'base.html')
@@ -183,18 +182,15 @@ def login_site(request):
 @login_required
 def logout_site(request):
     logout(request)
-    return redirect('index')
+    return redirect('base')
 # @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 
 
 
 
 
-# нужно 
+# нужно
 @login_required
-
-def index(request):
-    return render(request, 'index.html')
 
 def base(request):
     return render(request, 'base.html')
