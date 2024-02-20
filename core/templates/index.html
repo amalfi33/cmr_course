@@ -1,8 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
     <title>Не знаю</title>
 </head>
-
 <body>
     <div class="container">
         <!-- Sidebar Section -->
@@ -18,7 +15,7 @@
             <div class="toggle">
                 <div class="logo">
                     <img src="">
-                    <h2>CRM <span class="danger">Progress</span></h2>
+                    <h2>CRM<span class="danger">Progress</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -138,7 +135,7 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p>Привет, <b>Пользователь</b></p>
+                        <p>Привет, <b>{{user.username}}</b></p>
                         <small class="text-muted"></small>
                     </div>
                     <div class="profile-photo">
@@ -153,7 +150,7 @@
                 <div class="logo">
                     <img src="1">
                     <h2>{{ user.username }}</h2>
-                    <p>Учитель, ученик, админ</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -218,7 +215,6 @@
 
 
     </div>
-
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
 </body>
