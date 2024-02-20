@@ -1,8 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +10,14 @@
 </head>
 
 <body>
-    {% if user.is_authenticated %}
+
     <div class="container">
         <!-- Sidebar Section -->
         <aside>
             <div class="toggle">
                 <div class="logo">
                     <img src="">
-                    <h2>CRM <span class="danger">Progress</span></h2>
+                    <h2>CRM<span class="danger">Progress</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -219,7 +217,6 @@
 
 
     </div>
-    {% endif %}
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
 </body>
