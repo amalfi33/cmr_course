@@ -17,48 +17,46 @@ class Position(models.Model):
     def __str__(self):
         return self.position
 
-class Teacher(models.Model):
-    speciality = models.CharField(max_length=100, verbose_name='Специальность')
-
-    class Meta:
-        verbose_name = 'Преподаватель'
-        verbose_name_plural = 'Преподаватели'
-
-    def __str__(self) -> str:
-        return self.speciality
-
-class Course(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Курс обучения')
-    price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
-    date_start = models.DateField(verbose_name='Дата начала подписки')
-    date_end = models.DateField(verbose_name='Дата конца подписки')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Учитель')
-
-
-    class Meta:
-        verbose_name = 'Курс'  
-        verbose_name_plural = 'Курсы'
-
-    def __str__(self):
-        return self.name
 
 # Модель работника 
 class Employee(models.Model):
     position = models.OneToOneField(Position, verbose_name='Должность', on_delete=models.CASCADE, null= True, blank=True)
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE , null = True, blank = True)
+    phone = models.CharField(verbose_name='Номер телефона', max_length=20, null = True, blank = True)
 
-    user = models.ManyToManyField(User, verbose_name='Пользователь')
-    phone_number = models.IntegerField(verbose_name='Номер телефона')
-    courses = models.ManyToManyField(Course, verbose_name='Курс обучения')
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
-        user = self.user.first()
-        return f"{user if user else ''}"
+        return self.user.username
+    
+class Teacher(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Ф.И.О')
+
+    class Meta:
+        verbose_name = 'Преподаватель'
+        verbose_name_plural = 'Преподаватели'
+
+    def __str__(self):
+        return self.name
 
 
+class Course(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Курс обучения')
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
+    date_start = models.DateField(verbose_name='Дата начала подписки')
+    date_end = models.DateField(verbose_name='Дата конца подписки')
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель', related_name='courses')
+
+    class Meta:
+        verbose_name = 'Курс'
+        verbose_name_plural = 'Курсы'
+
+    def __str__(self):
+        return self.name
 
 
 class Student(models.Model):
@@ -118,5 +116,7 @@ class Transaction(models.Model):
     is_income = models.BooleanField(default=True) 
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null = True)
+
+
 
 

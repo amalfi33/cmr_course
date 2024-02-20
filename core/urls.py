@@ -7,7 +7,7 @@ urlpatterns = [
     path('atendence/<str:code>/', views.attendance, name='atendence'),
     path('progress_crm/', views.index, name='index'),
     path('logout/', views.logout_site, name='logout'),
-    path('  ', views.login_site, name='login_site'),
+    path('', views.login_site, name='login_site'),
 ]
 
 

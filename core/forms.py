@@ -30,7 +30,7 @@ class TeacherForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['speciality']
+        fields = ['name']
 
 # Форма авторизации
 class RegisterForm(UserCreationForm):

@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+        <!-- Картинка вкладки -->
+        <link rel="icon" href="{% static 'images/favicon.png' %}">  
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    <title>Не знаю</title>
+    <title>CRM PROGRESS</title>
 </head>
 <body>
     <div class="container">
@@ -14,8 +19,7 @@
         <aside>
             <div class="toggle">
                 <div class="logo">
-                    <img src="">
-                    <h2>CRM<span class="danger">Progress</span></h2>
+                    <h2>CRM<span class="danger"> <br> Progress</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -42,13 +46,13 @@
                         insights
                     </span>
                     <h3>Аналитика</h3>
-                <a href="#">
+                <a href="http://127.0.0.1:8000/admin">
                     <span class="material-icons-sharp">
                         settings
                     </span>
-                    <h3>Настройки</h3>
+                    <h3>Админка</h3>
                 </a>
-                <a href="#">
+                <a href="">
                     <span class="material-icons-sharp">
                         add
                     </span>
@@ -66,7 +70,7 @@
 
         <!-- Main Content -->
         <main>
-            <h1>Analytics</h1>
+            <h1>Главная</h1>
             <!-- Analyses -->
             
             <!-- End of Analyses -->           <!-- New Users Section -->
@@ -77,13 +81,8 @@
                         <div class="course-title">IT - BACK-END</div>
                         <div class="course-description">Описание курса: Python, Django</div>
                         <div class="course-details">
-                            {% for course in courses %}
                                 <h2>{{ employee.teacher }}</h2>
                                 <p>Учитель: {{ course.user }}</p>
-                                {% endfor %}
-                            <!-- <div>Преподаватель: {{ course.name }} </div>
-                            <div>Длительность: 7 месяцов</div>
-                            <div>Возраст: 12-20 </div> -->
                         </div>
                         <button class="btn">Записаться</button>
                     </div>
@@ -138,9 +137,6 @@
                         <p>Привет, <b>{{user.username}}</b></p>
                         <small class="text-muted"></small>
                     </div>
-                    <div class="profile-photo">
-                        <img src="1" >
-                    </div>
                 </div>
 
             </div>
@@ -148,9 +144,8 @@
 
             <div class="user-profile">
                 <div class="logo">
-                    <img src="1">
                     <h2>{{ user.username }}</h2>
-                    <p></p>
+                    <p>Должность: {{ employee.position }}</p>
                 </div>
             </div>
 
