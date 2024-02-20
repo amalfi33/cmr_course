@@ -12,7 +12,6 @@
 </head>
 
 <body>
-    {% if user.is_authenticated %}
     <div class="container">
         <!-- Sidebar Section -->
         <aside>
@@ -153,7 +152,7 @@
             <div class="user-profile">
                 <div class="logo">
                     <img src="1">
-                    <h2>{{employee.teacher.user.name}}</h2>
+                    <h2>{{ user.username }}</h2>
                     <p>Учитель, ученик, админ</p>
                 </div>
             </div>
@@ -219,7 +218,7 @@
 
 
     </div>
-    {% endif %}
+
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
 </body>

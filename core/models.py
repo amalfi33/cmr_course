@@ -7,15 +7,22 @@ from PIL import Image , ImageDraw
 from django.core.files import File
 
 
+class Position(models.Model):
+    position = models.CharField(max_length=100, verbose_name='Должность', unique = True)
+
+    class Meta:
+        verbose_name = 'Должность'
+        verbose_name_plural = 'Должности'
+
+    def __str__(self):
+        return self.position
+
 class Teacher(models.Model):
     speciality = models.CharField(max_length=100, verbose_name='Специальность')
 
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
-
-
-# Модель курса
 
     def __str__(self) -> str:
         return self.speciality
@@ -35,14 +42,12 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
-    
-
 # Модель работника 
 class Employee(models.Model):
-    # teacher = models.ManyToManyField(Teacher, verbose_name='Учитель')
-    user = models.ManyToManyField(User)
+    position = models.OneToOneField(Position, verbose_name='Должность', on_delete=models.CASCADE, null= True, blank=True)
+
+    user = models.ManyToManyField(User, verbose_name='Пользователь')
     phone_number = models.IntegerField(verbose_name='Номер телефона')
-    speciality = models.ManyToManyField(Teacher,verbose_name='Должность')
     courses = models.ManyToManyField(Course, verbose_name='Курс обучения')
 
     class Meta:
