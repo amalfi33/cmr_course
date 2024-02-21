@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CourseForm
-from .models import Course, Teacher, Student , Employee
+from .models import Course, Teacher, Student , Employee , Position , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -8,15 +8,16 @@ from .forms import TeacherForm , CourseForm, StudentForm
 from django.http import HttpResponse
 from django.contrib import messages
 import qrcode
-
+from .forms import RegisterForm
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
 
 def index(request):
     employees = Employee.objects.all()
+    position = Position.objects.all()
     courses = Course.objects.all()
-    context = {'courses': courses ,'employees': employees}
+    context = {'courses': courses ,'employees': employees ,'position': position}
     return render(request, 'index.html', context)
 
 # --------КУРСЫ---------
@@ -68,8 +69,6 @@ def edit_course(request, course_id):
 
 
 # Ученик
-
-# ----------------------------------
 @staff_member_required 
 def create_student(request):
     if request.method == 'POST':
@@ -177,15 +176,38 @@ def login_site(request):
             login(request, user)
             return redirect('index')  
         else:
-            return render(request, 'base.html', {'error_message': 'Неверные учетные данные'})
+            return render(request, 'greetings.html', {'error_message': 'Неверные учетные данные'})
     else:
-        return render(request, 'base.html')
+        return render(request, 'greetings.html')
+    
+def register(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                profile = Profile()
+                profile.user = user 
+                profile.save()
+                login(request, user)
+                return redirect('index')
+        else:
+            form = RegisterForm()
+        return render(request, 'register.html', {'form':form})
+    else:
+        return redirect('index') 
     
 @login_required
 def logout_site(request):
     logout(request)
     return redirect('base')
 # @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+# Приветсвие 
+def greetings(request):
+    return render(request, 'greetings.html')
 
-def base(request):
-    return render(request, 'base.html')
+# Группы
+def group_detail(request, group_id):
+    group = Group.objects.get(id=group_id)
+    return render(request, 'group_detail.html', {'group': group})
+
