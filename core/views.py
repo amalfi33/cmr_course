@@ -8,6 +8,8 @@ from .forms import TeacherForm , CourseForm, StudentForm
 from django.http import HttpResponse
 from django.contrib import messages
 import qrcode
+from django.contrib.auth.models import User
+
 
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
@@ -198,3 +200,14 @@ def index(request):
 
 def base(request):
     return render(request, 'base.html')
+
+
+
+
+def user_name(request):
+    # Получение текущего пользователя
+    current_user = request.user
+
+    # Получение имени пользователя
+    username = current_user.username
+    return redirect('index')
