@@ -1,0 +1,13 @@
+*.log
+*.pot
+*.pyc
+pycache
+db.sqlite3
+media
+
+.vscode/*
+!.vscode/setings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history

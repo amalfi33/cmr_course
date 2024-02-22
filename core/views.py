@@ -19,11 +19,13 @@ from random import randint
 
 @login_required
 def index(request):
-    employees = Employee.objects.all()
-    position = Position.objects.all()
-    courses = Course.objects.all()
-    context = {'courses': courses ,'employees': employees ,'position': position}
-    return render(request, 'index.html', context)
+    if request.user.is_authenticated:
+        employees = Employee.objects.all()
+        position = Position.objects.all()
+        courses = Course.objects.all()
+        context = {'courses': courses ,'employees': employees ,'position': position}
+        return render(request, 'index.html', context)
+    return redirect('login')
 
 # --------КУРСЫ---------
 
@@ -89,6 +91,30 @@ def edit_course(request, slug, course_id):
 def position(request):
     positions = Position.objects.all()
     return render(request, 'index.html', {'positions': positions})
+
+def employee(request):
+    employees = Employee.objects.all()
+    return render(request, 'index.html', {'employees': employees})
+
+def teacher(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'teacher_list.html', {'teachers': teachers})
+
+def course(request):
+    courses = Course.objects.all()
+    return render(request, 'course_list.html', {'courses': courses})
+
+def student(request):
+    students = Student.objects.all()
+    return render(request, 'student_list.html', {'students': students})
+
+def group(request):
+    groups = Group.objects.all()
+    return render(request, 'group_list.html', {'groups': groups})
+
+
+    
+    
 
 
 
@@ -198,7 +224,7 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('home')
         else:
             return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
     return render(request, 'base.html')
@@ -209,11 +235,8 @@ def login_site(request):
 @login_required
 def logout_site(request):
     logout(request)
-    return redirect('base')
+    return redirect('login')
 
-
-def base(request):
-    return render(request, 'base.html')
     
 
 def home(request):
