@@ -86,6 +86,12 @@ def edit_course(request, slug, course_id):
 # ----------------------------------
 
 
+def position(request):
+    positions = Position.objects.all()
+    return render(request, 'index.html', {'positions': positions})
+
+
+
 # Ученик
 @staff_member_required 
 def create_student(request):
@@ -209,6 +215,10 @@ def logout_site(request):
 def base(request):
     return render(request, 'base.html')
     
+
+def home(request):
+
+    return render(request, 'home.html')
 
 # @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 

@@ -11,7 +11,7 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    <title>CRM PROGRESS</title>
+    <title>{% block title %} CRM PROGRESS {% endblock %}</title>
 </head>
 <body>
 
@@ -73,7 +73,15 @@
         <!-- Main Content -->
        
 
-        <!-- Right Section -->
+
+
+    
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+            
+
+                    <!-- Right Section -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
@@ -96,13 +104,16 @@
                         <small class="text-muted"></small>
                     </div>
                 </div>
-
+ 
             </div>
             <!-- End of Nav -->
 
-    
-
-            
+            <div class="user-profile">
+                <div class="logo">
+                    <h2>{{ user.username }}</h2>
+                    <p>Должность: {{ user.employee.position }}</p>
+                </div>
+            </div>
 
     </div>
     <script src="{% static 'js/script.js' %}"></script>
