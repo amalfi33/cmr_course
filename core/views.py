@@ -17,7 +17,7 @@ from random import randint
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
-
+@login_required
 def index(request):
     employees = Employee.objects.all()
     position = Position.objects.all()
@@ -192,40 +192,24 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')  
+            return redirect('index')
         else:
-            return render(request, 'greetings.html', {'error_message': 'Неверные учетные данные'})
-    else:
-        return render(request, 'greetings.html')
-    
-def register(request):
-    if not request.user.is_authenticated:
-        if request.method == 'POST':
-            form = RegisterForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                profile = Profile()
-                profile.user = user 
-                profile.save()
-                login(request, user)
-                return redirect('index')
-        else:
-            form = RegisterForm()
-        return render(request, 'register.html', {'form':form})
-    else:
-        return redirect('index') 
-    
+            return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
+    return render(request, 'base.html')
+
+
+
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 @login_required
 def logout_site(request):
     logout(request)
     return redirect('base')
-# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
-# Приветсвие 
-def greetings(request):
-    return render(request, 'greetings.html')
 
-# Группы
-def group_detail(request, group_id):
-    group = Group.objects.get(id=group_id)
-    return render(request, 'group_detail.html', {'group': group})
+
+def base(request):
+    return render(request, 'base.html')
+    
+
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+
 
