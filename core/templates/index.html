@@ -1,32 +1,27 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+        <!-- Картинка вкладки -->
+        <link rel="icon" href="{% static 'images/favicon.png' %}">  
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    <title>Главная</title>
-
-
- 
-
+    <title>CRM PROGRESS</title>
 </head>
-
 <body>
 
 
-
-    {% if user.is_authenticated %}
     <div class="container">
         <!-- Sidebar Section -->
         <aside>
             <div class="toggle">
                 <div class="logo">
-                    <img src="">
-                    <h2>CRM <span class="danger">Progress</span></h2>
+                    <h2>CRM<span class="danger"> <br> Progress</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -53,18 +48,17 @@
                         insights
                     </span>
                     <h3>Аналитика</h3>
-
+                <a href="http://127.0.0.1:8000/admin">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>Админка</h3>
+                </a>
                 <a href="">
                     <span class="material-icons-sharp">
                         add
                     </span>
-                    <h3>Добавить <br> ученика</h3>
-                </a>
-                <a href="#">
-                    <span class="material-icons-sharp">
-                        settings
-                    </span>
-                    <h3>Админ-меню</h3>
+                    <h3>Добавить <br>аккаунт</h3>
                 </a>
                 <a href="{% url 'logout' %}">
                     <span class="material-icons-sharp">
@@ -77,56 +71,7 @@
         <!-- End of Sidebar Section -->
 
         <!-- Main Content -->
-        <main>
-            <h1>Analytics</h1>
-            <!-- Analyses -->
-            
-            <!-- End of Analyses -->           <!-- New Users Section -->
-            <div class="new-users">
-                <h2>Наши курсы</h2>
-                <div class="user-list">
-                    <div class="course-card">
-                        <div class="course-title">IT - BACK-END</div>
-                        <div class="course-description">Описание курса: Python, Django</div>
-                        <div class="course-details">
-                            {% for course in courses %}
-                                <h2>{{ course.name }}</h2>
-                                <p>Учитель: {{ course.user }}</p>
-                                {% endfor %}
-                            <!-- <div>Преподаватель: {{ course.name }} </div>
-                            <div>Длительность: 7 месяцов</div>
-                            <div>Возраст: 12-20 </div> -->
-                        </div>
-                        <button class="btn">Записаться</button>
-                    </div>
-                    
-            </div>
-            <!-- End of New Users Section -->
-
-
-            <!-- Recent Orders Table -->
-            <div class="recent-orders">
-                <h2>Статус оплаты курса</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Название курса</th>
-                            <th>Учитель</th>
-                            <th>Оплата</th>
-                            <th>Статус</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-                <a href="#">Посмотреть подробнее</a>
-            </div>
-            <!-- End of Recent Orders -->
-
-        </main>
-        <!-- End of Main Content -->
+       
 
         <!-- Right Section -->
         <div class="right-section">
@@ -147,29 +92,19 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p>Привет, <b>Пользователь</b></p>
+                        <p>Привет, <b>{{user.username}}</b></p>
                         <small class="text-muted"></small>
-                    </div>
-                    <div class="profile-photo">
-                        <img src="1" >
                     </div>
                 </div>
 
             </div>
             <!-- End of Nav -->
 
-            <div class="user-profile">
-                <div class="logo">
-                    <img src="1">
-                    <h2>{{ employee.teacher.user.first_name }}</h2>
-                    <p>Учитель, ученик, админ</p>
-                </div>
-            </div>
+    
 
             
 
     </div>
-    {% endif %}
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
 </body>

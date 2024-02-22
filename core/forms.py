@@ -1,6 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import Course, Student, Teacher, Employee
-from core.models import Employee 
+from core.models import Employee
+from django.contrib.auth.models import User
 from core.models import Teacher
 
 
@@ -15,9 +17,7 @@ class CourseForm(forms.ModelForm):
         fields = ['name', 'price','date_start','date_end', 'teacher', 'employee']
 
 
-
-
-# Студент форма
+# Форма студента
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
@@ -30,9 +30,25 @@ class TeacherForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['speciality']
+        fields = ['name']
 
 # Форма авторизации
+class RegisterForm(UserCreationForm):
+    username = forms.CharField(label= 'Логин', required= True , widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder':"Логин"}))
+    password = forms.CharField(label= 'Пароль', required= True , widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'placeholder':"Пароль"}))
+    first_name = forms.CharField(label= 'Имя', required= False , widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder':"Имя"}))
+    last_name = forms.CharField(label= 'Фамилия', required= False , widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder':"Фамилия"}))
+    
+    class Meta:
+        model = User
+        fields = ('username',  'password',)
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        if commit:
+            user.save()
+            return user
 
 

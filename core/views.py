@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CourseForm
-from .models import Course, Teacher, Student , Employee
+from .models import Course, Teacher, Student , Employee , Position , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -8,17 +8,21 @@ from .forms import TeacherForm , CourseForm, StudentForm
 from django.http import HttpResponse
 from django.contrib import messages
 import qrcode
-from django.contrib.auth.models import User
-
-
+from .forms import RegisterForm
+from .models import  Course
+from django.utils import timezone
+from django.utils.text import slugify
+from django.core.files.storage import FileSystemStorage
+from random import randint
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
-
+@login_required
 def index(request):
     employees = Employee.objects.all()
+    position = Position.objects.all()
     courses = Course.objects.all()
-    context = {'courses': courses ,'employees': employees}
+    context = {'courses': courses ,'employees': employees ,'position': position}
     return render(request, 'index.html', context)
 
 # --------КУРСЫ---------
@@ -27,51 +31,62 @@ def index(request):
 @staff_member_required
 def create_course(request):
     if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = CourseForm()
-    return render(request, 'create_course.html', {'form': form})
+        course = Course()
+        course.title = request.POST.get('title')
+        course.author = request.user
+        new_slug = slugify(request.POST.get('title'))
+        if Course.objects.filter(slug=new_slug).exists():
+            new_slug = new_slug + '__' + str(timezone.now().strftime('%Y-%m-%d_%H-%M-%S')) + '__' + str(randint(1, 100))
+        course.slug = new_slug
+        if request.FILES.get('image', False) is not False:
+            image_file = request.FILES['image']
+            fs = FileSystemStorage()
+            filename = fs.save(image_file.name, image_file)
+            course.image = filename
+        course.description = request.POST.get('description')
+        course.save()
+        return redirect('index')  # Предполагается, что у вас есть URL с именем 'index'
+    return render(request, 'create_course.html')
 # ----------------------------------
 
 
 
 # ----------------------------------
 @staff_member_required
-def delete_course(request, course_id):
+def delete_course(request, course_id, slug):
     course = get_object_or_404(Course, id=course_id)
 
-    if request.method == 'POST':
-        course.delete()
-        return redirect('index.html')
-    
-    return render(request, 'delete_course.html', {'course': course})
+    course = Course.objects.get(slug__exact=slug)
+    course.delete()
+    return redirect('index')
 # ----------------------------------
 
 
 
 # ----------------------------------
 @staff_member_required
-def edit_course(request, course_id):
+def edit_course(request, slug, course_id):
     course = get_object_or_404(Course, id=course_id)
-    
+    course = Course.objects.get(slug=slug)
     if request.method == 'POST':
-        form = CourseForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = CourseForm(instance=course)
-    
-    return render(request, 'edit_course.html', {'form': form})
+        course.title = request.POST.get('title')
+        new_slug = slugify(request.POST.get('title'))
+        if Course.objects.filter(slug=new_slug).exclude(pk=course.pk).exists():
+            new_slug = new_slug + '__' + str(timezone.now().strftime('%Y-%m-%d_%H-%M-%S')) + '__' + str(randint(1, 100))
+        course.slug = new_slug
+        if request.FILES.get('image', False) is not False:
+            image_file = request.FILES['image']
+            fs = FileSystemStorage()
+            filename = fs.save(image_file.name, image_file)
+            course.image = filename
+        course.description = request.POST.get('description')
+        course.save()
+        return redirect('index')  # Предполагается, что у вас есть URL с именем 'index'
+    return render(request, 'edit_course.html', {'course': course})
 # ----------------------------------
 
 
 # Ученик
-
-# ----------------------------------
 @staff_member_required 
 def create_student(request):
     if request.method == 'POST':
@@ -114,8 +129,10 @@ def edit_student(request, student_id):
         form = StudentForm(instance=student)
     
     return render(request, 'edit_student.html', {'form': form})
+
+
 def attendance(request):
-    return render(request)
+    return redirect(request,)
 # ----------------------------------
 
 
@@ -175,39 +192,24 @@ def login_site(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')  
+            return redirect('index')
         else:
-
-            return render(request, 'base.html', {'error_message': 'Неверные учетные данные'})
-    else:
-        return render(request, 'base.html')
-    
-@login_required
-def logout_site(request):
-    logout(request)
-    return redirect('index')
-# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
-
-
-
-
-
-# нужно 
-@login_required
-
-def index(request):
-    return render(request, 'index.html')
-
-def base(request):
+            return render(request, 'base.html', {'error_message': 'Неверное имя пользователя или пароль.'})
     return render(request, 'base.html')
 
 
 
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+@login_required
+def logout_site(request):
+    logout(request)
+    return redirect('base')
 
-def user_name(request):
-    # Получение текущего пользователя
-    current_user = request.user
 
-    # Получение имени пользователя
-    username = current_user.username
-    return redirect('index')
+def base(request):
+    return render(request, 'base.html')
+    
+
+# @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
+
+

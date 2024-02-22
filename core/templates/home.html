@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+<main>
+    <h1>Главная</h1>
+    <!-- Analyses -->
+    
+    <!-- End of Analyses -->           <!-- New Users Section -->
+    <div class="new-users">
+        <h2>Наши курсы</h2>
+        <div class="user-list">
+            <div class="course-card">
+                <div class="course-title"></div>
+                <div class="course-description">Описание курса: Python, Django</div>
+                <div class="course-details">
+                        <h2>{{ employee.teacher }}</h2>
+                        <p>Учитель: {{ course.user }}</p>
+                </div>
+                <button class="btn">Записаться</button>
+            </div>
+            
+    </div>
+    <!-- End of New Users Section -->
+
+
+    <!-- Recent Orders Table -->
+    <div class="recent-orders">
+        <h2>Статус оплаты курса</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название курса</th>
+                    <th>Учитель</th>
+                    <th>Оплата</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+        <a href="#">Посмотреть подробнее</a>
+    </div>
+    <!-- End of Recent Orders -->
+
+</main>
+<!-- End of Main Content -->
