@@ -4,11 +4,10 @@ from .models import Course, Teacher, Student , Employee , Position , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm , CourseForm, StudentForm
+from .forms import TeacherForm , CourseForm, StudentForm , EmployeeCreationForm
 from django.http import HttpResponse
 from django.contrib import messages
 import qrcode
-from .forms import RegisterForm
 from .models import  Course
 from django.utils import timezone
 from django.utils.text import slugify
@@ -23,9 +22,8 @@ def index(request):
     if request.user.is_authenticated:
         employees = Employee.objects.all()
         position = Position.objects.all()
-        positions = emoloyee.position.all()
         courses = Course.objects.all()
-        context = {'courses': courses ,'employees': employees ,'position': position , 'positions': positions}
+        context = {'courses': courses ,'employees': employees ,'position': position}
         return render(request, 'index.html', context)
     return redirect('login')
 
@@ -37,13 +35,7 @@ def create_course(request):
     if request.method == 'POST':
         course = Course()
         course.title = request.POST.get('title')
-        course.author = request.user
         new_slug = slugify(request.POST.get('title'))
-        if Course.objects.filter(slug=new_slug).exists():
-            new_slug = new_slug + '__' + str(timezone.now().strftime('%Y-%m-%d_%H-%M-%S')) + '__' + str(randint(1, 100))
-        course.slug = new_slug
-        if request.FILES.get('image', False) is not False:
-            image_file = request.FILES['image']
             fs = FileSystemStorage()
             filename = fs.save(image_file.name, image_file)
             course.image = filename
@@ -69,24 +61,15 @@ def delete_course(request, course_id, slug):
 
 # ----------------------------------
 @staff_member_required
-def edit_course(request, slug, course_id):
-    course = get_object_or_404(Course, id=course_id)
-    course = Course.objects.get(slug=slug)
+def create_employee(request):
     if request.method == 'POST':
-        course.title = request.POST.get('title')
-        new_slug = slugify(request.POST.get('title'))
-        if Course.objects.filter(slug=new_slug).exclude(pk=course.pk).exists():
-            new_slug = new_slug + '__' + str(timezone.now().strftime('%Y-%m-%d_%H-%M-%S')) + '__' + str(randint(1, 100))
-        course.slug = new_slug
-        if request.FILES.get('image', False) is not False:
-            image_file = request.FILES['image']
-            fs = FileSystemStorage()
-            filename = fs.save(image_file.name, image_file)
-            course.image = filename
-        course.description = request.POST.get('description')
-        course.save()
-        return redirect('index')  # Предполагается, что у вас есть URL с именем 'index'
-    return render(request, 'edit_course.html', {'course': course})
+        form = EmployeeCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = EmployeeCreationForm()
+    return render(request, 'register.html', {'form': form})
 # ----------------------------------
 
 

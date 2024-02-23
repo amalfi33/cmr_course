@@ -32,12 +32,12 @@ class TeacherForm(forms.ModelForm):
         fields = ['name']
 
 # Форма авторизации
-class RegisterForm(forms.ModelForm):
+class EmployeeCreationForm(forms.ModelForm):
     username = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Логин"}))
     password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'placeholder': "Пароль"}))
     first_name = forms.CharField(label='Имя', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Имя"}))
     last_name = forms.CharField(label='Фамилия', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Фамилия"}))
-    position = forms.ModelMultipleChoiceField(label='Должность', queryset=Position.objects.all(), required=False, widget=forms.SelectMultiple(attrs={'class': 'form-control mb-3'}))
+    position = forms.ModelChoiceField(label='Должность', queryset=Position.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3'}))
     phone = forms.CharField(label='Номер телефона', required=False, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': "Номер телефона"}))
 
     class Meta:
@@ -53,6 +53,7 @@ class RegisterForm(forms.ModelForm):
             user.save()
             employee = Employee.objects.create(
                 user=user,
+                position=self.cleaned_data['position'],
                 phone=self.cleaned_data['phone'],
             )
         return user
