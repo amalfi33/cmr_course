@@ -20,9 +20,9 @@ class Position(models.Model):
 
 # Модель работника 
 class Employee(models.Model):
-    position = models.OneToOneField(Position, verbose_name='Должность', on_delete=models.CASCADE, null= True, blank=True)
-    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE , null = True, blank = True)
-    phone = models.CharField(verbose_name='Номер телефона', max_length=20, null = True, blank = True)
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
+    phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
 
 
     class Meta:

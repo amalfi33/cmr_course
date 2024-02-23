@@ -14,6 +14,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.core.files.storage import FileSystemStorage
 from random import randint
+from django.contrib.auth.decorators import user_passes_test
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
@@ -22,8 +23,9 @@ def index(request):
     if request.user.is_authenticated:
         employees = Employee.objects.all()
         position = Position.objects.all()
+        positions = emoloyee.position.all()
         courses = Course.objects.all()
-        context = {'courses': courses ,'employees': employees ,'position': position}
+        context = {'courses': courses ,'employees': employees ,'position': position , 'positions': positions}
         return render(request, 'index.html', context)
     return redirect('login')
 
@@ -147,6 +149,32 @@ def delete_student(request, student_id):
 # ----------------------------------
 
 
+@staff_member_required
+def employee_create(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  
+            user.save()
+            
+            # Создаем объект Employee
+            employee = Employee.objects.create(user=user, phone=form.cleaned_data['phone'])
+            
+            # Назначаем должность (position) для сотрудника
+            positions = form.cleaned_data['position']  # Получаем выбранные должности из формы
+            employee.position.set(positions)  # Назначаем выбранные должности сотруднику
+            
+            return redirect('index')
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+
+
+
+
+
+
 # ----------------------------------
 @staff_member_required
 def edit_student(request, student_id):
@@ -214,6 +242,9 @@ def edit_teacher(request, teacher_id):
     
     return render(request, 'edit_teacher.html', {'form': form})
 # ----------------------------------
+
+
+
 
 
 # Авторизация
