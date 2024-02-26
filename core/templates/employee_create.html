@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создания сотрудника</title>
+    
+</head>
+<body>
+    <div class="new-users">
+        <h2>Создание сотрудника</h2>
+        <div class="user-list">
+                <div class="course-title">
+                <div class="course-details">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Создать</button>
+                    </form>
+                </div>
+            </div>
+
+    
+</body>
+</html>
+{% endblock %}

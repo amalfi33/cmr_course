@@ -27,41 +27,12 @@ def index(request):
         return render(request, 'index.html', context)
     return redirect('login')
 
-# --------КУРСЫ---------
 
-# ----------------------------------
+
+
+# Сотрудник
 @staff_member_required
-def create_course(request):
-    if request.method == 'POST':
-        course = Course()
-        course.title = request.POST.get('title')
-        new_slug = slugify(request.POST.get('title'))
-            fs = FileSystemStorage()
-            filename = fs.save(image_file.name, image_file)
-            course.image = filename
-        course.description = request.POST.get('description')
-        course.save()
-        return redirect('index')  # Предполагается, что у вас есть URL с именем 'index'
-    return render(request, 'create_course.html')
-# ----------------------------------
-
-
-
-# ----------------------------------
-@staff_member_required
-def delete_course(request, course_id, slug):
-    course = get_object_or_404(Course, id=course_id)
-
-    course = Course.objects.get(slug__exact=slug)
-    course.delete()
-    return redirect('index')
-# ----------------------------------
-
-
-
-# ----------------------------------
-@staff_member_required
-def create_employee(request):
+def employee_create(request):
     if request.method == 'POST':
         form = EmployeeCreationForm(request.POST)
         if form.is_valid():
@@ -69,7 +40,51 @@ def create_employee(request):
             return redirect('index')
     else:
         form = EmployeeCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'employee_create.html', {'form': form})
+
+
+def employee_list(request):
+    employees = Employee.objects.all()
+    return render(request, 'employee_list.html', {'employees': employees})
+
+
+@staff_member_required
+def employee_delete(request, employee_id):
+    employee = get_object_or_404(Employee, id=employee_id)
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('index')
+
+
+@staff_member_required
+def employee_edit(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    if request.method == 'POST':
+        form = EmployeeCreationForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = EmployeeCreationForm(instance=employee)
+    return render(request, 'employee_edit.html', {'form': form})
+# ----------------------------------
+
+# Курсы
+def course_create(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('course_list')
+    else:
+        form = CourseForm()
+    return render(request, 'course_create.html', {'form': form})
+
+
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request, 'course_list.html', {'courses': courses})
+
 # ----------------------------------
 
 
@@ -79,7 +94,7 @@ def position(request):
 
 def employee(request):
     employees = Employee.objects.all()
-    return render(request, 'index.html', {'employees': employees})
+    return redirect(request, 'employee_delete', {'employees': employees})
 
 def teacher(request):
     teachers = Teacher.objects.all()
@@ -130,28 +145,6 @@ def delete_student(request, student_id):
     
     return render(request, 'delete_student.html', {'student': student})
 # ----------------------------------
-
-
-@staff_member_required
-def employee_create(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  
-            user.save()
-            
-            # Создаем объект Employee
-            employee = Employee.objects.create(user=user, phone=form.cleaned_data['phone'])
-            
-            # Назначаем должность (position) для сотрудника
-            positions = form.cleaned_data['position']  # Получаем выбранные должности из формы
-            employee.position.set(positions)  # Назначаем выбранные должности сотруднику
-            
-            return redirect('index')
-    else:
-        form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
 
 
 
@@ -254,7 +247,7 @@ def logout_site(request):
     
 
 def home(request):
-
+    course = Course.objects.all()
     return render(request, 'home.html')
 
 # @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.

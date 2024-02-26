@@ -5,6 +5,7 @@ import qrcode
 from io import BytesIO
 from PIL import Image , ImageDraw
 from django.core.files import File
+from django.utils.text import slugify
 
 
 class Position(models.Model):
@@ -23,6 +24,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)  # Добавление поля slug
 
 
     class Meta:
@@ -31,6 +33,11 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.user.username)
+        super(Employee, self).save(*args, **kwargs)
     
 class Teacher(models.Model):
     name = models.CharField(max_length=100, verbose_name='Ф.И.О')
@@ -49,7 +56,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
     date_start = models.DateField(verbose_name='Дата начала подписки')
     date_end = models.DateField(verbose_name='Дата конца подписки')
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель', related_name='courses')
+    
 
     class Meta:
         verbose_name = 'Курс'

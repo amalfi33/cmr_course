@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создания сотрудника</title>
+    
+</head>
+<body>
+    <div class="new-users">
+        <h2>Изменить параметры сотрудника</h2>
+        <div class="user-list">
+                <div class="course-title">
+                <div class="course-details">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        
+                        <button type="submit">аи</button>
+                    </form>
+                </div>
+            </div>
+
+    
+    </body> 
+</html>
+{% endblock %}

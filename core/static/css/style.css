@@ -841,3 +841,22 @@ main .recent-orders a{
 		transform: scale(1.0);
 	}
 }
+
+
+.numbered-list {
+    list-style-type: none; /* Убираем стандартную нумерацию */
+  }
+  
+.numbered-list li::before {
+    content: "№ "; /* Добавляем символ № перед стандартной нумерацией */
+  }
+  
+  /* Восстановление стандартной нумерации */
+.numbered-list li {
+    counter-increment: my-counter;
+  }
+  
+.numbered-list li::before {
+    content: counter(my-counter) ". "; /* Добавляем стандартную нумерацию */
+  }
+  

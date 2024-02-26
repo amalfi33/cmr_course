@@ -7,13 +7,9 @@ from core.models import Teacher
 
 # Курсы форма
 class CourseForm(forms.ModelForm):
-    teacher = forms.ModelChoiceField(queryset=Teacher.objects.all())
-    employee = forms.ModelChoiceField(queryset=Employee.objects.all())  # Замените на имя поля, которое вы хотите использовать
-
-
     class Meta:
         model = Course
-        fields = ['name', 'price','date_start','date_end', 'teacher', 'employee']
+        fields = ['name', 'description', 'price' , 'date_start', 'date_end']
 
 
 # Форма студента

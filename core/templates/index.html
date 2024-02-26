@@ -8,7 +8,6 @@
     
         <!-- Картинка вкладки -->
         <link rel="icon" href="{% static 'images/favicon.png' %}">  
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
     <title>{% block title %} CRM PROGRESS {% endblock %}</title>
@@ -31,7 +30,7 @@
             </div>
 
             <div class="sidebar">
-                <a href="{% url 'index' %}" class="active">
+                <a href="{% url 'home' %}" class="active">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -48,6 +47,12 @@
                         insights
                     </span>
                     <h3>Аналитика</h3>
+                    <a href="{% url 'course_list' %}">
+                        <span class="material-icons-sharp">
+                            <i class="fa-solid fa-book"></i>
+                        </span>
+                        <h3>Курсы</h3>
+                    </a>
                     {% if user.is_superuser %}
                 <a href="http://127.0.0.1:8000/admin">
                     <span class="material-icons-sharp">
@@ -55,11 +60,24 @@
                     </span>
                     <h3>Админка</h3>
                 </a>
-                <a href="{% url 'register' %}">
+                <a href="{% url 'employee_create' %}">
                     <span class="material-icons-sharp">
                         add
                     </span>
                     <h3>Добавить <br>аккаунт</h3>
+                </a>
+                <a href="{% url 'course_create' %}">
+                    <span class="material-icons-sharp">
+                        add
+                    </span>
+                    <h3>Создания <br>курса</h3>
+                </a>
+                
+                <a href="{% url 'employee_list' %}">
+                    <span class="material-icons-sharp">
+                        person
+                    </span>
+                    <h3>Сотрудники</h3>
                 </a>
                 {% endif %}
                 <a href="{% url 'logout' %}">
@@ -114,13 +132,17 @@
                 <div class="logo">
                     <h2>{{ user.first_name }} {{user.last_name}}</h2>
                     <p>Должность: {{ user.employee.position }}</p>
-                    <p>Номере телефона: {{user.employee.phone}}</p>
+                    <p>Номер телефона: {{user.employee.phone}}</p>
                 </div>
             </div>
 
     </div>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>\
+<script src="https://kit.fontawesome.com/af02ed48ba.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
