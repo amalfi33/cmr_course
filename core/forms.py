@@ -25,7 +25,7 @@ class TeacherForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['name']
+        fields = ['user']
 
 # Форма авторизации
 class EmployeeCreationForm(forms.ModelForm):
@@ -53,5 +53,6 @@ class EmployeeCreationForm(forms.ModelForm):
                 phone=self.cleaned_data['phone'],
             )
         return user
+    
 
 

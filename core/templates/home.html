@@ -11,16 +11,25 @@
         <div class="user-list">
             <div class="course-card">
                 <div class="course-title"></div>
-                {% for course in courses %}
+                
                 <div class="course-description">Описание курса: {{course.name}}</div>
                 <div class="course-details">
-
-                        <h2>{{ employee.teacher }}</h2>
-                        <p>Учитель: {{ course.user }}</p>
+                    {% for course in courses %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.name }}</h5>
+                                <p class="card-text">{{ course.description }}</p>
+                                <p class="card-text">Price: ${{ course.price }}</p>
+                                <a href="" class="btn btn-primary">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
                 </div>
                 <button class="btn">Записаться</button>
             </div>
-            {% endfor +%}
+
     </div>
     <!-- End of New Users Section -->
 

@@ -40,14 +40,14 @@ class Employee(models.Model):
         super(Employee, self).save(*args, **kwargs)
     
 class Teacher(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Ф.И.О')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
 
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Course(models.Model):
@@ -102,7 +102,7 @@ class Student(models.Model):
 class Group(models.Model):
     name = models.CharField(max_length=100 , verbose_name = 'Название группы')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
-    category = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name = 'Курс')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name = 'Курс')
     students = models.ManyToManyField(Student , verbose_name= 'Ученики')
 
     class Meta:
@@ -123,6 +123,9 @@ class Transaction(models.Model):
     is_income = models.BooleanField(default=True) 
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null = True)
+
+
+    
 
 
 

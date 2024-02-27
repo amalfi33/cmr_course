@@ -4,9 +4,7 @@ from .models import Course, Teacher, Student , Employee , Position , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm , CourseForm, StudentForm , EmployeeCreationForm
-from django.http import HttpResponse
-from django.contrib import messages
+from .forms import TeacherForm , CourseForm, StudentForm , EmployeeCreationForm 
 import qrcode
 from .models import  Course
 from django.utils import timezone
@@ -58,18 +56,25 @@ def employee_delete(request, employee_id):
 
 @staff_member_required
 def employee_edit(request, employee_id):
-    employee = get_object_or_404(Employee, pk=employee_id)
+    employee = get_object_or_404(Employee, id=employee_id)
     if request.method == 'POST':
         form = EmployeeCreationForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
             return redirect('index')
     else:
-        form = EmployeeCreationForm(instance=employee)
-    return render(request, 'employee_edit.html', {'form': form})
+        form = EmployeeCreationForm(instance=employee, initial={
+            'username': employee.user.username,
+            'first_name': employee.user.first_name,
+            'last_name': employee.user.last_name,
+            'position': employee.position,
+            'phone': employee.phone,
+        })
+    return render(request, 'employee_edit.html', {'form': form})    
 # ----------------------------------
 
 # Курсы
+@staff_member_required
 def course_create(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
@@ -85,7 +90,19 @@ def course_list(request):
     courses = Course.objects.all()
     return render(request, 'course_list.html', {'courses': courses})
 
+@staff_member_required
+def course_delete(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.method == 'POST':
+        course.delete()
+        return redirect('index')
+
 # ----------------------------------
+    
+
+
+# Группы
+    
 
 
 def position(request):
@@ -247,8 +264,8 @@ def logout_site(request):
     
 
 def home(request):
-    course = Course.objects.all()
-    return render(request, 'home.html')
+    courses = Course.objects.all()
+    return render(request, 'home.html', {'courses': courses})
 
 # @login_required  требует чтобы пользователь был аутентифицирован, чтобы использовать функцию logout_site.
 

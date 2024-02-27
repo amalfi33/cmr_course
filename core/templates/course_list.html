@@ -28,16 +28,14 @@
                 <div class="course-details">
                     <ol class="numbered-list" >
                         {% for course in courses %}
-                            <li>
-                                {{course.name}} <br>
-                                {{ course.description }} - {{ course.price}}
-                                <form method="POST" action="" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-button">Удалить</button>
-                                </form>
-                                <a href="" class="edit-button">Изменить</a>
-                            </li>
-                            {% endfor %}
+            <li>
+                {{ course.name }} - {{ course.description }} - {{ course.price }}
+                <form method="post" action="{% url 'course_delete' course.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        {% endfor %}
                         </ol>
                     
                 </div>
