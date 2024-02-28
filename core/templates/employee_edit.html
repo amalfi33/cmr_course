@@ -1,9 +1,22 @@
 {% extends 'index.html' %}
 {% block content %}
-  <h2>Редактирование информации о сотруднике</h2>
+  <div class="new-users">
+        
+    <h1>Редактирование информации о сотруднике</h1>
+
+    <div class="user-list">
+
+        <div class="course-title">
   <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Сохранить изменения</button>
+    <br>
+    <button class="btn-outline-sm" type="submit">Сохранить изменения</button>
   </form>
+</div>
+                
+	
+</div>
+</div>
+</div>
 {% endblock %}

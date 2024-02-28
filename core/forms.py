@@ -7,6 +7,11 @@ from core.models import Teacher
 
 # Курсы форма
 class CourseForm(forms.ModelForm):
+    name = forms.CharField(label='Название Курса', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Название"})) 
+    description = forms.CharField(label='Описание Курса', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Описание"}))
+    price = forms.IntegerField(label='Цена Курса', required=True, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Цена"}))
+    date_start = forms.DateField(label='Дата начала подписки', required=True, widget=forms.DateInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Дата начала подписки"})) 
+    date_end = forms.DateField(label='Дата конца подписки', required=True, widget=forms.DateInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Дата конца подписки"}))       
     class Meta:
         model = Course
         fields = ['name', 'description', 'price' , 'date_start', 'date_end']
@@ -29,12 +34,12 @@ class TeacherForm(forms.ModelForm):
 
 # Форма авторизации
 class EmployeeCreationForm(forms.ModelForm):
-    username = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Логин"}))
-    password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'placeholder': "Пароль"}))
-    first_name = forms.CharField(label='Имя', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Имя"}))
-    last_name = forms.CharField(label='Фамилия', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': "Фамилия"}))
-    position = forms.ModelChoiceField(label='Должность', queryset=Position.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3'}))
-    phone = forms.CharField(label='Номер телефона', required=False, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'placeholder': "Номер телефона"}))
+    username = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Логин"})) 
+    password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%;  transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Пароль"}))
+    first_name = forms.CharField(label='Имя', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Имя"}))
+    last_name = forms.CharField(label='Фамилия', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3','style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Фамилия"}))
+    position = forms.ModelChoiceField(label='Должность', queryset=Position.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'display: block; width: 35%;  padding: 10px; background: rgba(224, 226, 225, 1); border-top: 1px solid rgba(0, 0, 0, .05); cursor: pointer; '}))
+    phone = forms.CharField(label='Номер телефона', required=False, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Номер телефона"}))
 
     class Meta:
         model = User

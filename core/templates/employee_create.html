@@ -13,15 +13,24 @@
     <div class="new-users">
         <h2>Создание сотрудника</h2>
         <div class="user-list">
-                <div class="course-title">
-                <div class="course-details">
-                    <form method="post">
+
+        <div class="course-title">
+
+
+
+                    <form class="" method="POST">
+                        
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit">Создать</button>
+                        <br>
+                        <button class="btn-outline-sm" type="submit">Создать</button>
                     </form>
                 </div>
+                
+	
             </div>
+        </div>
+    </div>
 
     
 </body>

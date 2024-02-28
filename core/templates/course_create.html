@@ -8,12 +8,25 @@
     <title>Создание курса</title>
 </head>
 <body>
+    <div class="new-users">
+        
     <h1>Создание курса</h1>
-    <form method="post">
+
+    <div class="user-list">
+
+        <div class="course-title">
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Создать курс</button>
+        <br>
+        <button class="btn-outline-sm" type="submit">Создать</button>
     </form>
+</div>
+                
+	
+</div>
+</div>
+</div>
 </body>
 </html>
 {% endblock %}
