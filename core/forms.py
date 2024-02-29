@@ -30,7 +30,7 @@ class TeacherForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['user']
+        fields = ['specialty']
 
 # Форма авторизации
 class EmployeeCreationForm(forms.ModelForm):
@@ -40,6 +40,7 @@ class EmployeeCreationForm(forms.ModelForm):
     last_name = forms.CharField(label='Фамилия', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3','style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Фамилия"}))
     position = forms.ModelChoiceField(label='Должность', queryset=Position.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'display: block; width: 35%;  padding: 10px; background: rgba(224, 226, 225, 1); border-top: 1px solid rgba(0, 0, 0, .05); cursor: pointer; '}))
     phone = forms.CharField(label='Номер телефона', required=False, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Номер телефона"}))
+    specialty = forms.ModelChoiceField(label='Специальность', queryset=Teacher.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Логин"})) 
 
     class Meta:
         model = User
@@ -53,6 +54,7 @@ class EmployeeCreationForm(forms.ModelForm):
         if commit:
             user.save()
             employee = Employee.objects.create(
+                specialty=self.cleaned_data['specialty'],
                 user=user,
                 position=self.cleaned_data['position'],
                 phone=self.cleaned_data['phone'],

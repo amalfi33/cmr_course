@@ -103,6 +103,10 @@ def course_delete(request, course_id):
 
 
 # Группы
+@staff_member_required
+def group_create(request):
+    if request.method =='POST':
+    
     
 
 

@@ -8,6 +8,14 @@ from django.core.files import File
 from django.utils.text import slugify
 
 
+
+class Teacher(models.Model):
+    specialty  = models.CharField(max_length=100 , verbose_name='Специальность учителя')
+
+    class Meta:
+        verbose_name = 'Преподаватель'
+        verbose_name_plural = 'Преподаватели'
+
 class Position(models.Model):
     position = models.CharField(max_length=100, verbose_name='Должность', unique = True)
 
@@ -24,8 +32,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
-    slug = models.SlugField(unique=True, null=True, blank=True)  # Добавление поля slug
-
+    specialty = models.ForeignKey(Teacher, verbose_name='Специальность', max_length=100, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Сотрудник'
@@ -34,21 +41,6 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.username
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.user.username)
-        super(Employee, self).save(*args, **kwargs)
-    
-class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
-
-    class Meta:
-        verbose_name = 'Преподаватель'
-        verbose_name_plural = 'Преподаватели'
-
-    def __str__(self):
-        return self.user.username
-
 
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
