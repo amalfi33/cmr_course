@@ -10,8 +10,10 @@
   <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <br>
-    <button class="btn-outline-sm" type="submit">Создать</button>
+
+    <!-- <input type="text" value="{{employee.user.first_name}}" name="name id=""> -->
+    <button class="btn-outline-sm" type="submit" style="margin: 5px 5px 5px 5px;">Создать</button>
+    <!-- <input type="text"> -->
   </form>
 </div>
                 

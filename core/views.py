@@ -58,10 +58,11 @@ def employee_delete(request, employee_id):
 def employee_edit(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     if request.method == 'POST':
+
         form = EmployeeEditForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
-            return redirect('employee_list', id=employee_id)
+            return redirect('employee_list')
     else:
         form = EmployeeEditForm(instance=employee)
     return render(request, 'employee_edit.html', {'form': form})
@@ -79,7 +80,6 @@ def course_create(request):
     else:
         form = CourseForm()
     return render(request, 'course_create.html', {'form': form})
-
 
 def course_list(request):
     courses = Course.objects.all()
@@ -295,7 +295,7 @@ def home(request):
 
 
 def profile(request, profile_id):
-    profile = get_object_or_404(Profile, id=profile_id)
+    profile = Profile.objects.get(id=profile_id)
     return render(request, 'profile.html', {'profile': profile})
 
 

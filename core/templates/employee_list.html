@@ -29,7 +29,10 @@
                     <ol class="numbered-list" >
                         {% for employee in employees  %}
                             <li>
-                                {{employee.user.first_name}} {{ employee.user.last_name }}- {{ employee.position }}
+                                {{employee.user.first_name}}
+                                 {{ employee.user.last_name }} 
+                                 {{employee.phone}}
+                                 - {{ employee.position }}
                                 <form method="POST" action="{% url 'employee_delete' employee.id %}" style="display: inline;">
                                     {% csrf_token %}
                                     <button type="submit" class="delete-button">Удалить</button>

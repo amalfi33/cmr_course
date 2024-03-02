@@ -67,7 +67,7 @@ class EmployeeCreationForm(forms.ModelForm):
         return user
     
 class EmployeeEditForm(forms.ModelForm):
-    username = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Логин"})) 
+    username = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Логин",})) 
     password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%;  transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Пароль"}))
     first_name = forms.CharField(label='Имя', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Имя"}))
     last_name = forms.CharField(label='Фамилия', required=False, widget=forms.TextInput(attrs={'class': 'form-control mb-3','style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;', 'placeholder': "Фамилия"}))
@@ -80,7 +80,11 @@ class EmployeeEditForm(forms.ModelForm):
         fields = ['username', 'password', 'first_name', 'last_name', 'position', 'phone', 'specialty']
         
     
-
+class UserEditForm(forms.ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['username', 'first_name' , 'last_name']
 
 
 
