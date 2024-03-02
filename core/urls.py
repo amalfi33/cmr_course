@@ -1,5 +1,5 @@
 from django.urls import path
-from .import views
+from . import views
 from .views import login_site
 
 
@@ -20,6 +20,11 @@ urlpatterns = [
     path('course_create/', views.course_create, name='course_create'),
     path('course_list', views.course_list, name='course_list'),
     path('course_delete/<int:course_id>/delete', views.course_delete, name='course_delete'),
+
+    path('group_create/', views.group_create, name='group_create'),
+    path('group_list/', views.group_list, name='group_list'),
+    path('group_delete/<int:group_id>', views.group_delete, name='group_delete'),
+
     
     path('atendence/<str:code>/', views.attendance, name='atendence'),
 ]

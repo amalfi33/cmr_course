@@ -9,12 +9,15 @@ from django.utils.text import slugify
 
 
 
-class Teacher(models.Model):
-    specialty  = models.CharField(max_length=100 , verbose_name='Специальность учителя')
+class Specialty(models.Model):
+    specialty = models.CharField(max_length=100 , verbose_name='Специальность учителя')
 
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
+
+    def __str__(self):
+        return self.specialty
 
 class Position(models.Model):
     position = models.CharField(max_length=100, verbose_name='Должность', unique = True)
@@ -32,7 +35,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
-    specialty = models.ForeignKey(Teacher, verbose_name='Специальность', max_length=100, on_delete=models.CASCADE)
+    specialty = models.ForeignKey(Specialty, verbose_name='Специальность', max_length=100, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Сотрудник'
@@ -93,7 +96,7 @@ class Student(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=100 , verbose_name = 'Название группы')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name = 'Курс')
     students = models.ManyToManyField(Student , verbose_name= 'Ученики')
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CourseForm
-from .models import Course, Teacher, Student , Employee , Position , Group
+from .models import Course, Specialty, Student , Employee , Position , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import TeacherForm , CourseForm, StudentForm , EmployeeCreationForm 
+from .forms import CourseForm,  EmployeeCreationForm , GroupCreateForm, EmployeeEditForm
 import qrcode
 from .models import  Course
 from django.utils import timezone
@@ -54,24 +54,18 @@ def employee_delete(request, employee_id):
         employee.delete()
         return redirect('index')
 
-
 @staff_member_required
 def employee_edit(request, employee_id):
-    employee = get_object_or_404(Employee, id=employee_id)
+    employee = Employee.objects.get(id=employee_id)
     if request.method == 'POST':
-        form = EmployeeCreationForm(request.POST, instance=employee)
+        form = EmployeeEditForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('employee_list', id=employee_id)
     else:
-        form = EmployeeCreationForm(instance=employee, initial={
-            'username': employee.user.username,
-            'first_name': employee.user.first_name,
-            'last_name': employee.user.last_name,
-            'position': employee.position,
-            'phone': employee.phone,
-        })
-    return render(request, 'employee_edit.html', {'form': form})    
+        form = EmployeeEditForm(instance=employee)
+    return render(request, 'employee_edit.html', {'form': form})
+
 # ----------------------------------
 
 # Курсы
@@ -96,7 +90,8 @@ def course_delete(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         course.delete()
-        return redirect('index')
+        return redirect('course_list')
+
 
 # ----------------------------------
     
@@ -104,8 +99,29 @@ def course_delete(request, course_id):
 
 # Группы
 @staff_member_required
+def group_list(request):
+    groups = Group.objects.all()
+    return render( request, 'group_list.html', {'groups': groups})
+
+
+@staff_member_required
 def group_create(request):
     if request.method =='POST':
+        form = GroupCreateForm()
+        if form.is_valid():
+            form.save()
+        return redirect('group_list')
+    else:
+        form = GroupCreateForm()
+        return render(request, 'group_create.html', {'form': form })
+    
+def group_delete(request , group_id ):
+    group = get_object_or_404(Group , id=group_id)
+    if request.method == 'POST':
+        group.delete()
+        return redirect('group_list')
+
+
     
     
 
@@ -119,7 +135,7 @@ def employee(request):
     return redirect(request, 'employee_delete', {'employees': employees})
 
 def teacher(request):
-    teachers = Teacher.objects.all()
+    teachers = Specialty.objects.all()
     return render(request, 'teacher_list.html', {'teachers': teachers})
 
 def course(request):
