@@ -12,7 +12,6 @@ from django.utils.text import slugify
 from django.core.files.storage import FileSystemStorage
 from random import randint
 from django.contrib.auth.decorators import user_passes_test
-from .models import Profile
 
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
@@ -294,8 +293,8 @@ def home(request):
 # Профиль 
 
 
-def profile(request, profile_id):
-    profile = Profile.objects.get(id=profile_id)
+def profile(request, id):
+    profile = Employee.objects.get(user_id__exact = id)
     return render(request, 'profile.html', {'profile': profile})
 
 

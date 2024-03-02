@@ -63,7 +63,7 @@ class Course(models.Model):
 
 class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
-        active = 1 
+        active = 1
         archived = 2
     name = models.CharField(max_length=100, verbose_name='Ф.И.О')
     course = models.ManyToManyField(Course, related_name= 'students', verbose_name='Курс')
@@ -121,10 +121,6 @@ class Transaction(models.Model):
 
 
 # Профиль
-class Profile(models.Model):
-    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
-    phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
 
 
 
