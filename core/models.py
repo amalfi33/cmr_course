@@ -9,6 +9,8 @@ from django.utils.text import slugify
 
 
 
+
+
 class Specialty(models.Model):
     specialty = models.CharField(max_length=100 , verbose_name='Специальность учителя')
 
@@ -55,13 +57,11 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
-
 class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
         active = 1
         archived = 2
     name = models.CharField(max_length=100, verbose_name='Ф.И.О')
-    course = models.ManyToManyField(Course, related_name= 'students', verbose_name='Курс')
     status = models.IntegerField(choices=StudentStatus.choices, default=1, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
@@ -85,9 +85,7 @@ class Student(models.Model):
         canvas.save(buffer, 'PNG')
         self.qr_code.save(fname,File(buffer), save=False)
         canvas.close()
-        super().save(*args, **kwargs) 
-        
-
+        super().save(*args, **kwargs)    
 
 class Group(models.Model):
     name = models.CharField(max_length=100 , verbose_name = 'Название группы')

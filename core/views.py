@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import user_passes_test
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
 @login_required
+
 def index(request):
     if request.user.is_authenticated:
         employees = Employee.objects.all()
@@ -32,7 +33,7 @@ def employee_create(request):
         form = EmployeeCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('employee_list')
     else:
         form = EmployeeCreationForm()
     return render(request, 'employee_create.html', {'form': form})
@@ -108,10 +109,12 @@ def course_edit(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         name = request.POST.get('name')
+        price = request.POST.get('price')
         description = request.POST.get('description')
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         course.name = name
+        course.price = price
         course.description = description
         course.start_date = start_date
         course.end_date = end_date
