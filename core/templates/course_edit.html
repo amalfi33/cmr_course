@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course</title>
+</head>
+<body>
+    <h1>Edit Course</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Название курса:</label><br>
+        <input type="text" id="name" name="name" value="{{ course.name }}"><br>
+        <label for="description">Описание:</label><br>
+        <textarea id="description" name="description">{{ course.description }}</textarea><br>
+        <label for="price">Цена:</label><br>
+        <input type="text" id="price" name="price" value="{{ course.price }}"><br>
+        <label for="date_start">Дата начала подписки:</label><br>
+        <input type="date" id="date_start" name="date_start" value="{{ course.date_start }}"><br>
+        <label for="date_end">Дата конца подписки:</label><br>
+        <input type="date" id="date_end" name="date_end" value="{{ course.date_end }}"><br>
+        <input type="submit" value="Сохранить">
+    </form>
+</body>
+</html>
+{% endblock %}

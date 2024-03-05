@@ -3,15 +3,11 @@
 {% block content %}
     <h1>{{ user.username }}</h1>
     <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-    {% if user.employee %}
-    <p>Должность: {{ user.employee.position }}</p>
     <p>Номер телефона: {{ user.employee.phone }}</p>
-    {% elif user.student %}
-    <p>Статус: Ученик</p>
-    {% else %}
-    <p>Статус: Сотрудник</p>
-    {% endif %}
-    {% if user.teacher %}
-    <p>Курсы, которые преподает: {{ user.teacher.courses_taught.all }}</p>
-    {% endif %}
+    
+    <p>Должность: {{ user.employee.get_position_display }}</p>
+    
+    
+
+<br>
 {% endblock %}  

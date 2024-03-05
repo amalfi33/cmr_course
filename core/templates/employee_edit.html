@@ -7,14 +7,38 @@
     <div class="user-list">
 
         <div class="course-title">
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <!-- <input type="text" value="{{employee.user.first_name}}" name="name id=""> -->
-    <button class="btn-outline-sm" type="submit" style="margin: 5px 5px 5px 5px;">Создать</button>
-    <!-- <input type="text"> -->
-  </form>
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Edit Employee</title>
+          </head>
+          <body>
+              <h1>Edit Employee</h1>
+              <form method="post">
+                  {% csrf_token %}
+                  <label for="first_name">Имя:</label><br>
+                  <input type="text" id="first_name" name="first_name" value="{{ employee.user.first_name }}"><br>
+                  <label for="last_name">Фамилия:</label><br>
+                  <input type="text" id="last_name" name="last_name" value="{{ employee.user.last_name }}"><br>
+                  <label for="phone">Номер телефона:</label><br>
+                  <input type="text" id="phone" name="phone" value="{{ employee.phone }}"><br>
+                  <label for="specialty">Специальность:</label><br>
+                  <select id="specialty" name="specialty">
+                      {% for specialty in specialties %}
+                          <option value="{{ specialty.id }}">{{ specialty.specialty }}</option>
+                      {% endfor %}
+                  </select><br>
+                  <label for="position">Должность:</label><br>
+                  <select id="position" name="position">
+                      {% for choice in employee.EmployeeStatus.choices %}
+                          <option value="{{ choice.0 }}" {% if choice.0 == employee.position %}selected{% endif %}>{{ choice.1 }}</option>
+                      {% endfor %}
+                  </select><br>
+                  <input type="submit" value="Сохранить">
+              </form>
+          </body>
+          </html>
+          
 </div>
                 
 	

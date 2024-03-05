@@ -33,7 +33,9 @@
                 <form method="post" action="{% url 'course_delete' course.id %}">
                     {% csrf_token %}
                     <button type="submit">Удалить</button>
+                    
                 </form>
+                <a href="{% url 'course_edit' course.id %}" class="edit-button">Изменить</a>
             </li>
         {% endfor %}
                         </ol>

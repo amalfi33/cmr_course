@@ -19,23 +19,18 @@ class Specialty(models.Model):
     def __str__(self):
         return self.specialty
 
-class Position(models.Model):
-    position = models.CharField(max_length=100, verbose_name='Должность', unique = True)
-
-    class Meta:
-        verbose_name = 'Должность'
-        verbose_name_plural = 'Должности'
-
-    def __str__(self):
-        return self.position
 
 
 # Модель работника 
 class Employee(models.Model):
+    class EmployeeStatus(models.TextChoices):
+        ADMINISTRATOR = 'admin', 'Администратор'
+        TEACHER = 'teacher', 'Учитель'
+
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    position = models.ForeignKey(Position, verbose_name='Должность', on_delete=models.CASCADE)
+    position = models.CharField(choices=EmployeeStatus.choices, max_length=20, verbose_name='Должность')
     phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
-    specialty = models.ForeignKey(Specialty, verbose_name='Специальность', max_length=100, on_delete=models.CASCADE)
+    specialty = models.ForeignKey(Specialty, verbose_name='Специальность', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Сотрудник'
@@ -118,9 +113,6 @@ class Transaction(models.Model):
     is_income = models.BooleanField(default=True) 
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null = True)
-
-
-# Профиль
 
 
 
