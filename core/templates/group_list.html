@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создания сотрудника</title>
+    
+</head>
+<body>
+    <style>
+        .delete-button {
+            background-color: red;
+            color: white;
+        }
+        
+        .edit-button {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+    <div class="new-users">
+        <h2>Создания сотрудника</h2>
+        <div class="user-list">
+                <div class="course-title">
+                <div class="course-details">
+                    <ol class="numbered-list" >
+                        {% for group in groups %}
+            <li>
+                {{ group.name }} - {{ group.employee.user.first_name }}  {{ group.employee.user.last_name }} <br> {{ group.course }}
+
+                {% for student in students %}
+                {{group.student.name}}
+                
+                <form method="post" action="{% url 'group_delete' group.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                    {% endfor %}
+                </form>
+                <a href="" class="edit-button">Изменить</a>
+            </li>
+                        </ol>
+                </div>
+            </div>
+            {% endfor %}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
+{% endblock %}

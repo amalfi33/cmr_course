@@ -4,7 +4,7 @@ from .models import Course, Specialty, Student , Employee , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CourseForm,  EmployeeCreationForm , GroupCreateForm
+from .forms import CourseForm,  EmployeeCreationForm 
 import qrcode
 from .models import  Course
 from django.utils import timezone
@@ -16,7 +16,6 @@ from django.contrib.auth.decorators import user_passes_test
 # @staff_member_required Нужен для того чтобы добавлять ученика или курс мог только администратор !!!!
 
 @login_required
-
 def index(request):
     if request.user.is_authenticated:
         employees = Employee.objects.all()
@@ -25,6 +24,7 @@ def index(request):
         specialties = Specialty.objects.all()
         context = {'courses': courses ,'employees': employees ,'employeechoices': employeechoices, 'specialties': specialties}
         return render(request, 'index.html', context)
+    return redirect('index')
 
 # Сотрудник
 @staff_member_required
@@ -111,15 +111,10 @@ def course_edit(request, course_id):
         name = request.POST.get('name')
         price = request.POST.get('price')
         description = request.POST.get('description')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
         course.name = name
         course.price = price
         course.description = description
-        course.start_date = start_date
-        course.end_date = end_date
         course.save()
-
         return redirect('course_list')
     return render(request, 'course_edit.html', {'course': course})
 
@@ -139,14 +134,37 @@ def group_list(request):
 
 @staff_member_required
 def group_create(request):
-    if request.method =='POST':
-        form = GroupCreateForm()
-        if form.is_valid():
-            form.save()
-        return redirect('group_list')
+    if request.method == 'POST':
+        # Получаем данные из POST-запроса
+        name = request.POST.get('name')
+        employee = request.POST.get('employee')
+        course = request.POST.get('course')
+        students = request.POST.getlist('students')
+        
+        # Создаем новую группу
+        group = Group.objects.create(
+            name=name,
+            employee=Employee.objects.get(pk=employee),
+            course=Course.objects.get(pk=course)
+        )
+        # Добавляем студентов в группу
+        group.students.add(*students)
+        
+        return redirect('group_list')  # Перенаправляем пользователя на список групп
     else:
-        form = GroupCreateForm()
-        return render(request, 'group_create.html', {'form': form })
+        # Получаем существующих сотрудников, учеников и курсы
+        employees = Employee.objects.all()
+        students = Student.objects.all()
+        courses = Course.objects.all()
+        
+        # Передаем данные в шаблон
+        context = {
+            'employees': employees,
+            'students': students,
+            'courses': courses
+        }
+        return render(request, 'group_create.html', context)
+
     
 def group_delete(request , group_id ):
     group = get_object_or_404(Group , id=group_id)
@@ -159,9 +177,7 @@ def group_delete(request , group_id ):
     
 
 
-def position(request):
-    positions = Position.objects.all()
-    return render(request, 'index.html', {'positions': positions})
+
 
 def employee(request):
     employees = Employee.objects.all()

@@ -45,10 +45,7 @@ class Employee(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
-    date_start = models.DateField(verbose_name='Дата начала подписки')
-    date_end = models.DateField(verbose_name='Дата конца подписки')
-    
+    price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')    
 
     class Meta:
         verbose_name = 'Курс'
@@ -92,9 +89,11 @@ class Group(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name = 'Курс')
     students = models.ManyToManyField(Student , verbose_name= 'Ученики')
+    date_start = models.DateField(verbose_name='Дата начала подписки', null = True)
+    date_end = models.DateField(verbose_name='Дата конца подписки', null=True)
 
     class Meta:
-        verbose_name = 'Группа'  
+        verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
 
     def __str__(self):

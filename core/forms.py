@@ -9,23 +9,14 @@ class CourseForm(forms.ModelForm):
     name = forms.CharField(label='Название Курса', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Название"})) 
     description = forms.CharField(label='Описание Курса', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Описание"}))
     price = forms.IntegerField(label='Цена Курса', required=True, widget=forms.NumberInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Цена"}))
-    date_start = forms.DateField(label='Дата начала подписки', required=True, widget=forms.DateInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Дата начала подписки"})) 
-    date_end = forms.DateField(label='Дата конца подписки', required=True, widget=forms.DateInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Дата конца подписки"}))       
+    
     
     class Meta:
         model = Course
-        fields = ['name', 'description', 'price' , 'date_start', 'date_end']
+        fields = ['name', 'description', 'price']
 
 
-class GroupCreateForm(forms.ModelForm):
-#    name = forms.CharField(label='Название Курса', required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Название"}))
-#    course = forms.ModelChoiceField(label='Должность', queryset=Course.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'display: block; width: 35%;  padding: 10px; background: rgba(224, 226, 225, 1); border-top: 1px solid rgba(0, 0, 0, .05); cursor: pointer; '}))
-#    employee = forms.ModelChoiceField(label='Должность', queryset=Employee.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'display: block; width: 35%;  padding: 10px; background: rgba(224, 226, 225, 1); border-top: 1px solid rgba(0, 0, 0, .05); cursor: pointer; '}))
-#    student = forms.ModelChoiceField(label='Должность', queryset=Student.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control mb-3', 'style': 'display: block; width: 35%;  padding: 10px; background: rgba(224, 226, 225, 1); border-top: 1px solid rgba(0, 0, 0, .05); cursor: pointer; '}))
 
-   class Meta:
-       model = Group
-       fields = ['name', 'course', 'employee', 'students']
 
 
 
