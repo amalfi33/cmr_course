@@ -6,6 +6,10 @@ from io import BytesIO
 from PIL import Image , ImageDraw
 from django.core.files import File
 from django.utils.text import slugify
+from django.http import HttpResponse
+import csv
+
+
 
 
 

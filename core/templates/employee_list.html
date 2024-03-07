@@ -1,76 +1,115 @@
 {% extends 'index.html' %}
 {% block content %}
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создания сотрудника</title>
-    
+    <title>Employee List</title>
+    <style>
+      .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+      }
+      .modal-content {
+      
+          background-color: #fefefe;
+          margin: 15% auto;
+          padding: 20px;
+          border-radius: 8%;
+          border: 1px solid #888;
+          width: 25%;
+      }
+      .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+      }
+      </style>
 </head>
 <body>
-    <style>
-        .delete-button {
-            background-color: red;
-            color: white;
-        }
+  <div class="new-users">
+  <div class="user-list">
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Номер</th>
+                <th>Должность</th>
+                <th>Удалить</th>
+                <th>Изменить</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee.user.first_name }}</td>
+                <td>{{ employee.user.last_name }}</td>
+                <td>{{ employee.phone }}</td>
+                <td>{{ employee.get_position_display }}</td>
+                <td>
+                    <button type="button" id="openModalBtn">Удалить</button>
+                </td>
+                <td><a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Модальное окно подтверждения удаления -->
+    {% for employee in employees %}
+    <div id="myModal" class="modal">
+
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Вы действиткельно хотите удолить этого рабочего?</p>
+    
+        <a href="{% url 'employee_delete' employee.id %}"></a>
+        <span >Удалить</span>
         
-        .edit-button {
-            background-color: blue;
-            color: white;
-        }
-    </style>
-    <div class="new-users">
-        <h2>Создания сотрудника</h2>
-        <div class="user-list">
-                <div class="course-title">
-                <div class="course-details">
-                    <ol class="numbered-list" >
-                        {% for employee in employees  %}
-                            <li>
-                                {{employee.user.first_name}}
-                                 {{ employee.user.last_name }} 
-                                 {{employee.phone}}
-                                 - {{ employee.get_position_display }}
-                                 
-                                <form method="POST" action="{% url 'employee_delete' employee.id %}" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="button" class="delete-button" data-toggle="modal" data-target="#confirmDeleteModal{{ employee.id }}">Удалить</button>
-                                </form>
-                                <a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+<script>
+  var modal = document.getElementById('myModal');
+  var btn = document.getElementById("openModalBtn");
+  var span = document.getElementsByClassName("close")[0];
+  
+  btn.onclick = function() {
+      modal.style.display = "block";
+  }
+  
+  span.onclick = function() {
+      modal.style.display = "none";
+  }
+  
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+  </script>
 
-                                <div class="modal fade" id="confirmDeleteModal{{ employee.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="confirmDeleteModalLabel">Подтверждение удаления</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          Вы уверены, что хотите удалить сотрудника {{ employee.user.first_name }} {{ employee.user.last_name }}?
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
-                                          <form method="POST" action="{% url 'employee_delete' employee.id %}">
-                                              {% csrf_token %}
-                                              <button type="submit" class="btn btn-success">Да</button>
-                                          </form>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </li>
-                        {% endfor %}
-                        </ol>
-                    
-                </div>
-            </div>
 
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 {% endblock %}
