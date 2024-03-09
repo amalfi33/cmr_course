@@ -52,6 +52,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')
     date_start = models.DateField(verbose_name='Дата начала подписки')
     date_end = models.DateField(verbose_name='Дата конца подписки')
+    # status = 
     
 
     class Meta:

@@ -1,0 +1,29 @@
+/* admin.css */
+
+/* Изменение цвета фона и текста заголовка */
+.grp-header {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Изменение цвета фона и текста боковой панели навигации */
+.grp-side-nav {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Изменение цвета фона таблицы */
+.grp-module .grp-table {
+    background-color: #fff;
+}
+
+/* Изменение цвета фона заголовка таблицы */
+.grp-module .grp-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Изменение цвета фона и текста строк таблицы при наведении */
+.grp-module .grp-table tr:hover {
+    background-color: #cce5ff;
+}

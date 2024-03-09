@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'adminlte3_theme',
+    'adminlte3',
     'core',
     'django.contrib.auth',
     'django.contrib.contenttypes',

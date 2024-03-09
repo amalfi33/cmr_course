@@ -6,64 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee List</title>
-    <style>
-      .modal {
-          display: none;
-          position: fixed;
-          z-index: 1;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgba(0,0,0,0.4);
-      }
-      .modal-content {
-          background-color: #fefefe;
-          margin: 15% auto;
-          padding: 20px;
-          border-radius: 8px;
-          border: 1px solid #888;
-          width: 30%;
-      }
-      .close {
-          color: #aaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-          color: black;
-          text-decoration: none;
-          cursor: pointer;
-      }
-      table {
-          border-collapse: collapse;
-          width: 100%;
-      }
-      th, td {
-          border: 1px solid #ddd;
-          padding: 8px;
-          text-align: left;
-      }
-      th {
-          background-color: #f2f2f2;
-      }
-      tr:hover {
-          background-color: #f5f5f5;
-      }
-      .delete-button {
-          background-color: red;
-          color: white;
-          border: none;
-          padding: 8px 12px;
-          cursor: pointer;
-      }
-      .delete-button:hover {
-          background-color: darkred;
-      }
-    </style>
+
 </head>
 <body>
 <div class="new-users">
@@ -91,45 +34,30 @@
                     </td>
                     <td><a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a></td>
                 </tr>
+                
                 <!-- Модальные окна подтверждения удаления -->
-                <div id="modal{{ employee.id }}" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <p>Вы действительно хотите удалить учителя {{ employee.user.first_name }} {{ employee.user.last_name }}?</p>
-                        
-                        <a href="{% url 'employee_delete' employee.id %}">Удалить</a>
-                    </div>
-                </div>
-                {% endfor %}
+                
+                
             </tbody>
+            {% endfor %}
         </table>
     </div>
 </div>
-<script>
-    var modalBtns = document.querySelectorAll('.delete-button');
-    var modals = document.querySelectorAll('.modal');
-    var spans = document.querySelectorAll('.close');
-
-    modalBtns.forEach(function(btn, index) {
-        btn.onclick = function() {
-            modals[index].style.display = "block";
-        }
-    });
-
-    spans.forEach(function(span, index) {
-        span.onclick = function() {
-            modals[index].style.display = "none";
-        }
-    });
-
-    window.onclick = function(event) {
-        modals.forEach(function(modal) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        });
-    }
-</script>
+{% for employee in employees %}
+                
+                <div id="modal{{ employee.id }}" class="modal">
+                    <form action="{% url 'employee_delete' employee.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>Вы действительно хотите удалить учителя {{ employee.user.first_name }} {{ employee.user.last_name }}?</p>
+                            
+                            <button>Удалить</button>
+                        </div>
+                    </form>
+                    
+                </div>
+                {% endfor %}
 </body>
 </html>
 {% endblock %}
