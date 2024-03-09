@@ -1,8 +1,5 @@
 {% extends 'index.html' %}
 {% block content %}
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +19,12 @@
           background-color: rgba(0,0,0,0.4);
       }
       .modal-content {
-      
           background-color: #fefefe;
           margin: 15% auto;
           padding: 20px;
-          border-radius: 8%;
+          border-radius: 8px;
           border: 1px solid #888;
-          width: 25%;
+          width: 30%;
       }
       .close {
           color: #aaa;
@@ -42,74 +38,98 @@
           text-decoration: none;
           cursor: pointer;
       }
-      </style>
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+      th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
+      tr:hover {
+          background-color: #f5f5f5;
+      }
+      .delete-button {
+          background-color: red;
+          color: white;
+          border: none;
+          padding: 8px 12px;
+          cursor: pointer;
+      }
+      .delete-button:hover {
+          background-color: darkred;
+      }
+    </style>
 </head>
 <body>
-  <div class="new-users">
-  <div class="user-list">
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Номер</th>
-                <th>Должность</th>
-                <th>Удалить</th>
-                <th>Изменить</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td>{{ employee.user.first_name }}</td>
-                <td>{{ employee.user.last_name }}</td>
-                <td>{{ employee.phone }}</td>
-                <td>{{ employee.get_position_display }}</td>
-                <td>
-                    <button type="button" id="openModalBtn">Удалить</button>
-                </td>
-                <td><a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Модальное окно подтверждения удаления -->
-    {% for employee in employees %}
-    <div id="myModal" class="modal">
-
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Вы действиткельно хотите удолить этого рабочего?</p>
-    
-        <a href="{% url 'employee_delete' employee.id %}"></a>
-        <span >Удалить</span>
-        
-      </div>
+<div class="new-users">
+    <div class="user-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Номер телефона</th>
+                    <th>Должность</th>
+                    <th>Удалить</th>
+                    <th>Изменить</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.user.first_name }}</td>
+                    <td>{{ employee.user.last_name }}</td>
+                    <td>{{ employee.phone }}</td>
+                    <td>{{ employee.get_position_display }}</td>
+                    <td>
+                        <button type="button" class="delete-button" data-modal-id="modal{{ employee.id }}">Удалить</button>
+                    </td>
+                    <td><a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a></td>
+                </tr>
+                <!-- Модальные окна подтверждения удаления -->
+                <div id="modal{{ employee.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Вы действительно хотите удалить учителя {{ employee.user.first_name }} {{ employee.user.last_name }}?</p>
+                        
+                        <a href="{% url 'employee_delete' employee.id %}">Удалить</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    {% endfor %}
-</div>
 </div>
 <script>
-  var modal = document.getElementById('myModal');
-  var btn = document.getElementById("openModalBtn");
-  var span = document.getElementsByClassName("close")[0];
-  
-  btn.onclick = function() {
-      modal.style.display = "block";
-  }
-  
-  span.onclick = function() {
-      modal.style.display = "none";
-  }
-  
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
-  </script>
+    var modalBtns = document.querySelectorAll('.delete-button');
+    var modals = document.querySelectorAll('.modal');
+    var spans = document.querySelectorAll('.close');
 
+    modalBtns.forEach(function(btn, index) {
+        btn.onclick = function() {
+            modals[index].style.display = "block";
+        }
+    });
 
+    spans.forEach(function(span, index) {
+        span.onclick = function() {
+            modals[index].style.display = "none";
+        }
+    });
+
+    window.onclick = function(event) {
+        modals.forEach(function(modal) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+</script>
+</body>
+</html>
 {% endblock %}
