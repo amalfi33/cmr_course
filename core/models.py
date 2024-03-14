@@ -6,10 +6,8 @@ from io import BytesIO
 from PIL import Image , ImageDraw
 from django.core.files import File
 from django.utils.text import slugify
-
-
-
-
+from django.http import HttpResponse
+import csv
 
 class Specialty(models.Model):
     specialty = models.CharField(max_length=100 , verbose_name='Специальность учителя')

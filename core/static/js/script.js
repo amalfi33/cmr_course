@@ -1,22 +1,25 @@
-const Orders = [
-    {
-        productName: 'BACK-END',
-        productNumber: 'Улугбек',
-        paymentStatus: 'Наличные',
-        status: 'Оплачен'
-    },
-    {
-        productName: 'CSS полный курс',
-        productNumber: 'Амаль',
-        paymentStatus: 'Картой',
-        status: 'Не оплачен'
-    },
-    {
-        productName: 'Верстка сайтов',
-        productNumber: 'Боря',
-        paymentStatus: 'Наличные',
-        status: 'Оплачен'
-    },
-]
+var modalBtns = document.querySelectorAll('.delete-button');
+var modals = document.querySelectorAll('.modal');
+var spans = document.querySelectorAll('.close');
+
+modalBtns.forEach(function(btn, index) {
+    btn.onclick = function() {
+        modals[index].style.display = "block";
+    }
+});
+
+spans.forEach(function(span, index) {
+    span.onclick = function() {
+        modals[index].style.display = "none";
+    }
+});
+
+window.onclick = function(event) {
+    modals.forEach(function(modal) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+}
 
 

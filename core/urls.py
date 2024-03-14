@@ -6,7 +6,7 @@ from .views import login_site
 urlpatterns = [
     path('', views.home, name='home'),
     path('index/', views.index, name='index'),
-
+    
     path('logout/', views.logout_site, name='logout'),
     path('login/', views.login_site, name='login'),
 
@@ -25,8 +25,6 @@ urlpatterns = [
     path('group_create/', views.group_create, name='group_create'),
     path('group_list/', views.group_list, name='group_list'),
     path('group_delete/<int:group_id>', views.group_delete, name='group_delete'),
-
-    
     path('atendence/<str:code>/', views.attendance, name='atendence'),
 ]
 

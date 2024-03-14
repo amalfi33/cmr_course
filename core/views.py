@@ -207,17 +207,7 @@ def group(request):
 
 # Ученик
 @staff_member_required 
-def create_student(request):
-    if request.method == 'POST':
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            student = form.save(commit=False)
-           
-            student.save()
-            return redirect('index.html')
-    else:
-        form = StudentForm()
-    return render(request, 'create_student.html', {'form': form})
+
 # ----------------------------------
 
 
@@ -239,72 +229,12 @@ def delete_student(request, student_id):
 
 
 # ----------------------------------
-@staff_member_required
-def edit_student(request, student_id):
-    student = get_object_or_404(Student, id=student_id)
-    
-    if request.method == 'POST':
-        form = StudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = StudentForm(instance=student)
-    
-    return render(request, 'edit_student.html', {'form': form})
+
 
 
 def attendance(request):
     return redirect(request,)
-# ----------------------------------
-
-
-# Учитель
-
-
-# ----------------------------------
-@staff_member_required
-def create_teacher(request):
-    if request.method == 'POST':
-        form = TeacherForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = TeacherForm()
-    
-    return render(request, 'create_teacher.html', {'form': form})
-# ----------------------------------
-
-
-# ----------------------------------
-@staff_member_required
-def delete_teacher(request, teacher_id):
-    teacher = get_object_or_404(Teacher, id=teacher_id)
-    
-    if request.method == 'POST':
-        teacher.delete()
-        return redirect('index.html')
-    
-    return render(request, 'delete_teacher.html', {'teacher': teacher})
-# ----------------------------------
-
-
-# ----------------------------------
-@staff_member_required
-def edit_teacher(request, teacher_id):
-    teacher = get_object_or_404(Teacher, id=teacher_id)
-    
-    if request.method == 'POST':
-        form = TeacherForm(request.POST, instance=teacher)
-        if form.is_valid():
-            form.save()
-            return redirect('index.html')
-    else:
-        form = TeacherForm(instance=teacher)
-    
-    return render(request, 'edit_teacher.html', {'form': form})
-# ----------------------------------
+# ---------------
 
 
 
