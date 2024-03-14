@@ -28,7 +28,6 @@ class Employee(models.Model):
     class EmployeeStatus(models.TextChoices):
         ADMINISTRATOR = 'admin', 'Администратор'
         TEACHER = 'teacher', 'Учитель'
-
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     position = models.CharField(choices=EmployeeStatus.choices, max_length=20, verbose_name='Должность')
     phone = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
@@ -43,9 +42,13 @@ class Employee(models.Model):
     
 
 class Course(models.Model):
+    class CourseStatus(models.TextChoices):
+        ACTIVE = 'active', 'Активный'
+        INACTIVE = 'inactive', 'Неактивный'
     name = models.CharField(max_length=100, verbose_name='Курс обучения')
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Цена')    
+    status = models.CharField(choices=CourseStatus.choices, max_length=20, verbose_name='Статус')
 
     class Meta:
         verbose_name = 'Курс'
