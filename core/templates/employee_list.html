@@ -5,8 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee List</title>
-
 </head>
 <body>
 <div class="new-users">
@@ -18,8 +16,6 @@
                     <th>Фамилия</th>
                     <th>Номер телефона</th>
                     <th>Должность</th>
-                    <th>Удалить</th>
-                    <th>Изменить</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,12 +30,10 @@
                     </td>
                     <td><a href="{% url 'employee_edit' employee.id %}" class="edit-button">Изменить</a></td>
                 </tr>
-                
-                <!-- Модальные окна подтверждения удаления -->
-                
-                
+                {% endfor %}
             </tbody>
-            {% endfor %}
+            
+            style="margin-left: 50px;"
         </table>
     </div>
 </div>

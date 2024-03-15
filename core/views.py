@@ -135,29 +135,23 @@ def group_list(request):
 @staff_member_required
 def group_create(request):
     if request.method == 'POST':
-        # Получаем данные из POST-запроса
+
         name = request.POST.get('name')
         employee = request.POST.get('employee')
         course = request.POST.get('course')
         students = request.POST.getlist('students')
         
-        # Создаем новую группу
         group = Group.objects.create(
             name=name,
             employee=Employee.objects.get(pk=employee),
             course=Course.objects.get(pk=course)
         )
-        # Добавляем студентов в группу
         group.students.add(*students)
-        
-        return redirect('group_list')  # Перенаправляем пользователя на список групп
+        return redirect('group_list')
     else:
-        # Получаем существующих сотрудников, учеников и курсы
         employees = Employee.objects.all()
         students = Student.objects.all()
         courses = Course.objects.all()
-        
-        # Передаем данные в шаблон
         context = {
             'employees': employees,
             'students': students,
@@ -199,19 +193,6 @@ def group(request):
     groups = Group.objects.all()
     return render(request, 'group_list.html', {'groups': groups})
 
-
-    
-    
-
-
-
-# Ученик
-@staff_member_required 
-
-# ----------------------------------
-
-
-# ----------------------------------
 @staff_member_required
 def delete_student(request, student_id):
     student = get_object_or_404(Student, id=student_id)
@@ -221,20 +202,11 @@ def delete_student(request, student_id):
         return redirect('index.html')
     
     return render(request, 'delete_student.html', {'student': student})
-# ----------------------------------
-
-
-
-
-
-
-# ----------------------------------
-
 
 
 def attendance(request):
     return redirect(request,)
-# ---------------
+
 
 
 

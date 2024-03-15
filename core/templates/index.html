@@ -33,24 +33,30 @@
             </div>
 
             <div class="sidebar">
-                <a href="{% url 'home' %}" class="active">
+                <a href="{% url 'home' %}" {% if request.path == '/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
                     <h3>Главная</h3>
                 </a>
-                <a href="{% url 'profile' request.user.id %}" class="">
+                
+
+                <a href="{% url 'profile' request.user.id %}" class="active" {% if request.path == '/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         person
                     </span>
                     <h3>Профиль</h3>
                 </a>
+
+                    
+                    
+              
                 <a href="#">
                     <span class="material-icons-sharp">
                         insights
                     </span>
-                    <h3>Аналитика</h3>
-                    <a href="{% url 'course_list' %}" >
+                    <h3>Транзакции</h3>
+                    <a href="{% url 'course_list' %}" {% if request.path == '/course_list' %} class="active" {% endif %}>
                         <span class="material-icons-sharp">
                             <i class="fa-solid fa-book"></i>
                         </span>
@@ -64,26 +70,26 @@
                     </span>
                     <h3>Админка</h3>
                 </a>
-                <a href="{% url 'employee_create' %}">
+                <a href="{% url 'employee_create' %}" {% if request.path == '/employee_create/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         add
                     </span>
                     <h3>Добавить <br>аккаунт</h3>
                 </a>
-                <a href="{% url 'course_create' %}">
+                <a href="{% url 'course_create' %}" {% if request.path == '/course_create/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         add
                     </span>
                     <h3>Создания <br>курса</h3>
                 </a>
-                <a href="{% url 'group_create' %}">
+                <a href="{% url 'group_create' %}" {% if request.path == '/group_create/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         add
                     </span>
                     <h3>Создание <br>группы</h3>
                 </a>
                 
-                <a href="{% url 'employee_list' %}">
+                <a href="{% url 'employee_list' %}" {% if request.path == '/employee_list/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         person
                     </span>
