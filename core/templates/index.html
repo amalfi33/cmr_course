@@ -41,11 +41,14 @@
                 </a>
                 
 
-                <a href="{% url 'profile' request.user.id %}" class="active" {% if request.path == '/' %} class="active" {% endif %}>
+                <a href="{% url 'profile' request.user.id %}" {% if request.path == '/profile/<int:id>/' %} class="active" {% endif %}>
+                    
                     <span class="material-icons-sharp">
                         person
                     </span>
+    
                     <h3>Профиль</h3>
+                    
                 </a>
 
                     
@@ -87,6 +90,12 @@
                         add
                     </span>
                     <h3>Создание <br>группы</h3>
+                </a>
+                <a href="{% url 'student_create' %}" {% if request.path == '/group_create/' %} class="active" {% endif %}>
+                    <span class="material-icons-sharp">
+                        
+                    </span>
+                    <h3>Создание <br>студента</h3>
                 </a>
                 
                 <a href="{% url 'employee_list' %}" {% if request.path == '/employee_list/' %} class="active" {% endif %}>

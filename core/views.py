@@ -4,9 +4,10 @@ from .models import Course, Specialty, Student , Employee , Group
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CourseForm,  EmployeeCreationForm 
+from .forms import CourseForm,  EmployeeCreationForm , StudentForm
 import qrcode
 from .models import  Course
+from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 from django.core.files.storage import FileSystemStorage
@@ -165,6 +166,37 @@ def group_delete(request , group_id ):
     if request.method == 'POST':
         group.delete()
         return redirect('group_list')
+    
+
+
+
+# Студенты
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, 'student_list.html', {'students': students})
+
+
+
+
+def student_create(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                password=form.cleaned_data['password']
+            )
+
+            student = form.save(commit=False)
+            student.user = user
+            student.save()
+            return redirect('student_list')
+    else:
+        form = StudentForm()
+    return render(request, 'student_create.html', {'form': form})
 
 
     

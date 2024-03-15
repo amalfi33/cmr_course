@@ -1,5 +1,5 @@
 from django import forms
-from .models import Course, Specialty, Employee , Group
+from .models import Course, Specialty, Employee , Student
 from django.contrib.auth.models import User
 
 
@@ -15,10 +15,6 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['name', 'description', 'price', 'status']
-
-
-
-
 
 
 # Учитель форма
@@ -57,6 +53,17 @@ class EmployeeCreationForm(forms.ModelForm):
                 phone=self.cleaned_data['phone'],
             )
         return user
+    
+
+class StudentForm(forms.ModelForm):
+    username = forms.CharField(label='Username')
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = Student
+        fields = ['username', 'first_name', 'last_name', 'password', 'phone', 'status']
     
 
 

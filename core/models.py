@@ -59,7 +59,7 @@ class Student(models.Model):
     class StudentStatus(models.IntegerChoices):
         active = 1
         archived = 2
-    name = models.CharField(max_length=100, verbose_name='Ф.И.О')
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     status = models.IntegerField(choices=StudentStatus.choices, default=1, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
@@ -71,14 +71,14 @@ class Student(models.Model):
         verbose_name_plural = 'Ученики'
 
     def __str__(self):
-        return self.name
+        return self.user.username
     
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make(self.name)
+        qrcode_img = qrcode.make('ыу')
         canvas = Image.new('RGB', (290, 290), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
-        fname =f'qr_code-{self.name}'+'.png'
+        fname =f'qr_code-{self.user.username}'+'.png'
         buffer = BytesIO()
         canvas.save(buffer, 'PNG')
         self.qr_code.save(fname,File(buffer), save=False)

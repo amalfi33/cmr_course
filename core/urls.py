@@ -25,6 +25,10 @@ urlpatterns = [
     path('group_create/', views.group_create, name='group_create'),
     path('group_list/', views.group_list, name='group_list'),
     path('group_delete/<int:group_id>', views.group_delete, name='group_delete'),
+
+    path('student_create/', views.student_create, name='student_create'),
+    path('student_list/', views.student_list, name='student_list'),
+
     path('atendence/<str:code>/', views.attendance, name='atendence'),
 ]
 
