@@ -56,11 +56,11 @@ class Course(models.Model):
         return self.name
 
 class Student(models.Model):
-    class StudentStatus(models.IntegerChoices):
-        active = 1
-        archived = 2
+    class StudentStatus(models.TextChoices):
+        ACTIVE = 'active' , 'активный'
+        ARCHIVED = 'archived', 'архив'
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    status = models.CharField(choices=StudentStatus.choices,  max_length=20,default=1, verbose_name='Статус')
+    status = models.CharField(choices=StudentStatus.choices,  max_length=20, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
     code = models.CharField(max_length=20, blank=True)
@@ -78,7 +78,7 @@ class Student(models.Model):
         canvas = Image.new('RGB', (290, 290), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
-        fname =f'qr_code-{self.user.username}'+'.png'
+        fname =f'qr_code-{'xuy'}'+'.png'
         buffer = BytesIO()
         canvas.save(buffer, 'PNG')
         self.qr_code.save(fname,File(buffer), save=False)
