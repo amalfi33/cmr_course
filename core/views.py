@@ -168,27 +168,33 @@ def group_create(request):
         }
         return render(request, 'group_create.html', context)
 
-    
+@staff_member_required
 def group_delete(request , group_id ):
     group = get_object_or_404(Group , id=group_id)
     if request.method == 'POST':
         group.delete()
         return redirect('group_list')
     
+@staff_member_required    
 def group_edit(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
-
     if request.method == 'POST':
         group.name = request.POST.get('name')
-        group.employee = request.POST.get('employee')
-        group.course = request.POST.get('course')
+    
+        employee_id = request.POST.get('employee')
+        employee = get_object_or_404(Employee, pk=employee_id)
+        group.employee = employee
+    
+        course_id = request.POST.get('course')
+        course = get_object_or_404(Course, pk=course_id)
+        group.course = course
+        
         group.students.set(request.POST.getlist('students'))
         group.date_start = request.POST.get('date_start')
         group.date_end = request.POST.get('date_end')
         group.save()
         return redirect('group_list')
     else:
-
         employees = Employee.objects.all()
         students = Student.objects.all()
         courses = Course.objects.all()
@@ -199,7 +205,6 @@ def group_edit(request, group_id):
             'courses': courses
         }
         return render(request, 'group_edit.html', context)
-
     
     
 
@@ -211,8 +216,7 @@ def student_list(request):
     return render(request, 'student_list.html', {'students': students})
 
 
-
-
+@staff_member_required
 def student_create(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -232,13 +236,30 @@ def student_create(request):
         form = StudentForm()
     return render(request, 'student_create.html', {'form': form})
 
+@staff_member_required
 def student_delete(request, student_id):
     student = get_object_or_404(Student, id=student_id)
     if request.method == 'POST':
         student.delete()
         return redirect('student_list')
-
     
+def student_edit(request, student_id):
+    student = Student.objects.get(pk=student_id)
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        status = request.POST['status']
+        phone = request.POST['phone']
+        user = student.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        student.phone = phone
+        student.status = status
+        student.save()
+    return render(request, 'student_edit.html', {'student': student})
+
+
 
 
 

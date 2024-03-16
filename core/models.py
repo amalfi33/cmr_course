@@ -60,7 +60,7 @@ class Student(models.Model):
         active = 1
         archived = 2
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    status = models.IntegerField(choices=StudentStatus.choices, default=1, verbose_name='Статус')
+    status = models.CharField(choices=StudentStatus.choices,  max_length=20,default=1, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
     qr_code = models.ImageField(upload_to= 'students_qr/', blank=True)
     code = models.CharField(max_length=20, blank=True)

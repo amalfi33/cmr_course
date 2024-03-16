@@ -26,7 +26,7 @@
                     <td>
                         <button type="button" class="delete-button" data-modal-id="modal">Удалить</button>
                     </td>
-                    <td><a href="" class="edit-button">Изменить</a></td>
+                    <td><a href="{% url 'student_edit' student.id %}" class="edit-button">Изменить</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
