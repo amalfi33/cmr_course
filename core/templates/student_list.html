@@ -9,7 +9,7 @@
 <body>
 <div class="new-users">
     <div class="user-list">
-        <table>
+        <table  >
             <thead>
                 <tr>
                     <th>Имя</th>
@@ -34,14 +34,14 @@
         </table>
     </div>
 </div>
-{% for employee in employees %}
+{% for student in students %}
                 
-                <div id="modal" class="modal">
-                    <form action="" method="POST">
+                <div id="modal{{student.id}}" class="modal">
+                    <form action="{% url 'student_delete' student.id %}" method="POST">
                         {% csrf_token %}
                         <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>Вы действительно хотите удалить учителя {{ employee.user.first_name }} {{ employee.user.last_name }}?</p>
+                            <span  class="close">&times;</span>
+                            <p>Вы действительно хотите удалить учителя {{ student.user.first_name }} {{ student.user.last_name }}?</p>
                             
                             <button>Удалить</button>
                         </div>

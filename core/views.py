@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import CourseForm,  EmployeeCreationForm , StudentForm
 import qrcode
+from datetime import datetime
 from .models import  Course
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -141,11 +142,18 @@ def group_create(request):
         employee = request.POST.get('employee')
         course = request.POST.get('course')
         students = request.POST.getlist('students')
-        
+        date_start = request.POST.get('date_start')
+        date_end = request.POST.get('date_end')
+
+        date_start = datetime.strptime(date_start, '%Y-%m-%d')
+        date_end = datetime.strptime(date_end, '%Y-%m-%d')
+
         group = Group.objects.create(
             name=name,
             employee=Employee.objects.get(pk=employee),
-            course=Course.objects.get(pk=course)
+            course=Course.objects.get(pk=course),
+            date_start=date_start,
+            date_end=date_end
         )
         group.students.add(*students)
         return redirect('group_list')
@@ -167,6 +175,33 @@ def group_delete(request , group_id ):
         group.delete()
         return redirect('group_list')
     
+def group_edit(request, group_id):
+    group = get_object_or_404(Group, pk=group_id)
+
+    if request.method == 'POST':
+        group.name = request.POST.get('name')
+        group.employee = request.POST.get('employee')
+        group.course = request.POST.get('course')
+        group.students.set(request.POST.getlist('students'))
+        group.date_start = request.POST.get('date_start')
+        group.date_end = request.POST.get('date_end')
+        group.save()
+        return redirect('group_list')
+    else:
+
+        employees = Employee.objects.all()
+        students = Student.objects.all()
+        courses = Course.objects.all()
+        context = {
+            'group': group,
+            'employees': employees,
+            'students': students,
+            'courses': courses
+        }
+        return render(request, 'group_edit.html', context)
+
+    
+    
 
 
 
@@ -182,7 +217,6 @@ def student_create(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
         if form.is_valid():
-
             user = User.objects.create_user(
                 username=form.cleaned_data['username'],
                 first_name=form.cleaned_data['first_name'],
@@ -198,8 +232,12 @@ def student_create(request):
         form = StudentForm()
     return render(request, 'student_create.html', {'form': form})
 
+def student_delete(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('student_list')
 
-    
     
 
 
