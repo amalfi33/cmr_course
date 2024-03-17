@@ -113,7 +113,7 @@ b{
     color: var(--color-warning);
 }
 
-.container{
+.container-custom{
     display: grid;
     width: 96%;
     margin: 0 auto;
@@ -132,12 +132,12 @@ aside .toggle{
     margin-top: 1.4rem;
 }
 
-aside .toggle .logo{
+aside .toggle .logo-custom{
     display: flex;
     gap: 0.5rem;
 }
 
-aside .toggle .logo img{
+aside .toggle .logo-custom img{
     width: 2rem;
     height: 2rem;
 }
@@ -147,7 +147,7 @@ aside .toggle .close{
     display: none;
 }
 
-aside .sidebar{
+aside .sidebar-custom{
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
@@ -159,11 +159,11 @@ aside .sidebar{
     transition: all 0.3s ease;
 }
 
-aside .sidebar:hover{
+aside .sidebar-custom:hover{
     box-shadow: none;
 }
 
-aside .sidebar a{
+aside .sidebar-custom a{
     display: flex;
     align-items: center;
     color: var(--color-info-dark);
@@ -174,18 +174,18 @@ aside .sidebar a{
     transition: all 0.3s ease;
 }
 
-aside .sidebar a span{
+aside .sidebar-custom a span{
     font-size: 1.6rem;
     transition: all 0.3s ease;
 }
 
-aside .sidebar a:last-child{
+aside .sidebar-custom a:last-child{
     position: absolute;
     bottom: 2rem;
     width: 100%;
 }
 
-aside .sidebar a.active{
+aside .sidebar-custom a.active{
     width: 100%;
     color: var(--color-primary);
     background-color: var(--color-light);
@@ -193,39 +193,39 @@ aside .sidebar a.active{
     
 }
 
-aside .sidebar a.message{
+aside .sidebar-custom a.message{
     width: 100%;
     color: var(--color-primary);
     margin-left: 0;
 }
 
-aside .sidebar a.message::before{
+aside .sidebar-custom a.message::before{
     content: '';
     width: 6px;
     height: 18px;
 }
 
-aside .sidebar a.active::before{
+aside .sidebar-custom a.active::before{
     content: '';
     width: 6px;
     height: 18px;
     background-color: var(--color-primary);
 }
 
-aside .sidebar a.active span{
+aside .sidebar-custom a.active span{
     color: var(--color-primary);
     margin-left: calc(1rem - 3px);
 }
 
-aside .sidebar a:hover{
+aside .sidebar-custom a:hover{
     color: var(--color-primary);
 }
 
-aside .sidebar a:hover span{
+aside .sidebar-custom a:hover span{
     margin-left: 0.6rem;
 }
 
-aside .sidebar .message-count{
+aside .sidebar-custom .message-count{
     background-color: var(--color-danger);
     padding: 2px 6px;
     color: var(--color-white);
@@ -391,21 +391,21 @@ main .recent-orders a{
     color: var(--color-primary);
 }
 
-.right-section{
+.right-section-custom{
     margin-top: 1.4rem;
 }
 
-.right-section .nav{
+.right-section-custom .nav-custom{
     display: flex;
     justify-content: end;
     gap: 2rem;
 }
 
-.right-section .nav button{
+.right-section-custom .nav-custom button{
     display: none;
 }
 
-.right-section .dark-mode{
+.right-section-custom .dark-mode{
     background-color: var(--color-light);
     display: flex;
     justify-content: space-between;
@@ -416,7 +416,7 @@ main .recent-orders a{
     border-radius: var(--border-radius-1);
 }
 
-.right-section .dark-mode span{
+.right-section-custom .dark-mode span{
     font-size: 1.2rem;
     width: 50%;
     height: 100%;
@@ -425,26 +425,26 @@ main .recent-orders a{
     justify-content: center;
 }
 
-.right-section .dark-mode span.active{
+.right-section-custom .dark-mode span.active{
     background-color: var(--color-primary);
     color: white;
     border-radius: var(--border-radius-1);
 }
 
-.right-section .nav .profile{
+.right-section-custom .nav-custom .profile{
     display: flex;
     gap: 2rem;
     text-align: right;
 }
 
-.right-section .nav .profile .profile-photo{
+.right-section-custom .nav-custom .profile .profile-photo{
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
     overflow: hidden;
 }
 
-.right-section .user-profile{
+.right-section-custom .user-profile-custom{
     display: flex;
     justify-content: center;
     text-align: center;
@@ -457,40 +457,40 @@ main .recent-orders a{
     transition: all 0.3s ease;
 }
 
-.right-section .user-profile:hover{
+.right-section-custom .user-profile-custom:hover{
     box-shadow: none;
 }
 
-.right-section .user-profile img{
+.right-section-custom .user-profile-custom img{
     width: 11rem;
     height: auto;
     margin-bottom: 0.8rem;
     border-radius: 50%;
 }
 
-.right-section .user-profile h2{
+.right-section-custom .user-profile-custom h2{
     margin-bottom: 0.2rem;
 }
 
-.right-section .reminders{
+.right-section-custom .reminders{
     margin-top: 2rem;
 }
 
-.right-section .reminders .header{
+.right-section-custom .reminders .header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.8rem;
 }
 
-.right-section .reminders .header span{
+.right-section-custom .reminders .header span{
     padding: 10px;
     box-shadow: var(--box-shadow);
     background-color: var(--color-white);
     border-radius: 50%;
 }
 
-.right-section .reminders .notification{
+.right-section-custom .reminders .notification{
     background-color: var(--color-white);
     display: flex;
     align-items: center;
@@ -503,11 +503,11 @@ main .recent-orders a{
     transition: all 0.3s ease;
 }
 
-.right-section .reminders .notification:hover{
+.right-section-custom .reminders .notification:hover{
     box-shadow: none;
 }
 
-.right-section .reminders .notification .content{
+.right-section-custom .reminders .notification .content{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -515,7 +515,7 @@ main .recent-orders a{
     width: 100%;
 }
 
-.right-section .reminders .notification .icon{
+.right-section-custom .reminders .notification .icon{
     padding: 0.6rem;
     color: var(--color-white);
     background-color: var(--color-success);
@@ -523,11 +523,11 @@ main .recent-orders a{
     display: flex;
 }
 
-.right-section .reminders .notification.deactive .icon{
+.right-section-custom .reminders .notification.deactive .icon{
     background-color: var(--color-danger);
 }
 
-.right-section .reminders .add-reminder{
+.right-section-custom .reminders .add-reminder{
     background-color: var(--color-white);
     border: 2px dashed var(--color-primary);
     color: var(--color-primary);
@@ -537,12 +537,12 @@ main .recent-orders a{
     cursor: pointer;
 }
 
-.right-section .reminders .add-reminder:hover{
+.right-section-custom .reminders .add-reminder:hover{
     background-color: var(--color-primary);
     color: white;
 }
 
-.right-section .reminders .add-reminder div{
+.right-section-custom .reminders .add-reminder div{
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -558,15 +558,15 @@ main .recent-orders a{
         display: none;
     }
 
-    aside .sidebar h3{
+    aside .sidebar-custom h3{
         display: none;
     }
 
-    aside .sidebar a{
+    aside .sidebar-custom a{
         width: 5.6rem;
     }
 
-    aside .sidebar a:last-child{
+    aside .sidebar-custom a:last-child{
         position: relative;
         margin-top: 1.8rem;
     }
@@ -637,16 +637,16 @@ main .recent-orders a{
         display: inline;
     }
 
-    aside .sidebar h3{
+    aside .sidebar-custom h3{
         display: inline;
     }
 
-    aside .sidebar a{
+    aside .sidebar-custom a{
         width: 100%;
         height: 3.4rem;
     }
 
-    aside .sidebar a:last-child{
+    aside .sidebar-custom a:last-child{
         position: absolute;
         bottom: 5rem;
     }
@@ -676,12 +676,12 @@ main .recent-orders a{
         margin: 0;
     }
 
-    .right-section{
+    .right-section-custom{
         width: 94%;
         margin: 0 auto 4rem;
     }
 
-    .right-section .nav{
+    .right-section-custom .nav-custom{
         position: fixed;
         top: 0;
         left: 0;
@@ -695,17 +695,17 @@ main .recent-orders a{
         margin: 0;
     }
 
-    .right-section .nav .dark-mode{
+    .right-section-custom .nav-custom .dark-mode{
         width: 4.4rem;
         position: absolute;
         left: 66%;
     }
 
-    .right-section .profile .info{
+    .right-section-custom .profile .info{
         display: none;
     }
 
-    .right-section .nav button{
+    .right-section-custom .nav-custom button{
         display: inline-block;
         background-color: transparent;
         cursor: pointer;
@@ -714,7 +714,7 @@ main .recent-orders a{
         left: 1rem;
     }
 
-    .right-section .nav button span{
+    .right-section-custom .nav-custom button span{
         font-size: 2rem;
     }
 
@@ -1012,4 +1012,21 @@ tr:hover {
 }
 .delete-button:hover {
     background-color: darkred;
+}
+
+
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css');
+
+:root {
+    --custom-color-primary: #6C9BCF;
+}
+
+/* Переопределение основных переменных Bootstrap */
+:root {
+    --bs-primary: var(--custom-color-primary);
+}
+
+/* Пользовательские стили */
+.custom-element {
+    color: var(--custom-color-primary) !important; /* Пример использования !important */
 }

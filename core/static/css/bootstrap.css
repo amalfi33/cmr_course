@@ -4050,7 +4050,7 @@ input[type="button"].btn-block {
   }
 }
 
-.nav {
+.nav-custom {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
