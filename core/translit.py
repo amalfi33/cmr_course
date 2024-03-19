@@ -10,6 +10,3 @@ def translit_slug():
         result += choice(list)
         i += 1
     return result
-    
-
-print(translit_slug())

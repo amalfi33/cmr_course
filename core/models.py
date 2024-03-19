@@ -21,8 +21,6 @@ class Specialty(models.Model):
         return self.specialty
 
 
-
-# Модель работника 
 class Employee(models.Model):
     class EmployeeStatus(models.TextChoices):
         ADMINISTRATOR = 'admin', 'Администратор'
@@ -39,7 +37,6 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.username
     
-
 class Course(models.Model):
     class CourseStatus(models.TextChoices):
         ACTIVE = 'active', 'Активный'
@@ -76,7 +73,6 @@ class Student(models.Model):
     
     def save(self, *args, **kwargs):
         code = translit_slug()
-
         qrcode_img = qrcode.make(f"http://127.0.0.1:8000/atendence/{code}")
         canvas = Image.new('RGB', (350, 350), 'white')
         draw = ImageDraw.Draw(canvas)

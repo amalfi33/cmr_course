@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from .forms import CourseForm
 from .models import Course, Specialty, Student , Employee , Group, Attendance
 from django.contrib.auth import authenticate , login , logout
@@ -273,39 +273,14 @@ def student_edit(request, student_id):
     return render(request, 'student_edit.html', {'student': student})
 # ----------------------------------
 
-def employee(request):
-    employees = Employee.objects.all()
-    return redirect(request, 'employee_delete', {'employees': employees})
-
-def teacher(request):
-    teachers = Specialty.objects.all()
-    return render(request, 'teacher_list.html', {'teachers': teachers})
-
-def course(request):
-    courses = Course.objects.all()
-    return render(request, 'course_list.html', {'courses': courses})
-
-def student(request):
-    students = Student.objects.all()
-    return render(request, 'student_list.html', {'students': students})
-
-def group(request):
-    groups = Group.objects.all()
-    return render(request, 'group_list.html', {'groups': groups})
-
-
-
-def attendance(request, code):
-    attendance = Attendance.objects.get(code=code)
-    return render(request, 'attendace.html')
-
+# Посещаемость
 def attendance_list(request):
     attendances = Attendance.objects.all()
     return render(request, 'attendance_list.html', {'attendances': attendances})
 
 
 def attendance_create(request, code):
-    attendance = Attendance()
-    attendance.student = Student.get(code==code)
+    student = get_object_or_404(Student, code=code)
+    attendance = Attendance(student=student)
     attendance.save()
     return redirect(reverse('index'))
