@@ -65,6 +65,13 @@
                     </span>
                     <h3>Добавить <br>аккаунт</h3>
                 </a>
+
+                <a href="{% url 'attendance_list' %}" {% if request.path == '/employee_create/' %} class="active" {% endif %}>
+                    <span class="material-icons-sharp">
+                        add
+                    </span>
+                    <h3>СПИСОК </h3>
+                </a>
                 <a href="{% url 'course_create' %}" {% if request.path == '/course_create/' %} class="active" {% endif %}>
                     <span class="material-icons-sharp">
                         add

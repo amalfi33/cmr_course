@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .forms import CourseForm
 from .models import Course, Specialty, Student , Employee , Group, Attendance
 from django.contrib.auth import authenticate , login , logout
@@ -295,10 +295,17 @@ def group(request):
 
 
 
-def attendance(request):
-    attendance = Attendance.objects.all
+def attendance(request, code):
+    attendance = Attendance.objects.get(code=code)
     return render(request, 'attendace.html')
 
+def attendance_list(request):
+    attendances = Attendance.objects.all()
+    return render(request, 'attendance_list.html', {'attendances': attendances})
 
 
-
+def attendance_create(request, code):
+    attendance = Attendance()
+    attendance.student = Student.get(code==code)
+    attendance.save()
+    return redirect(reverse('index'))

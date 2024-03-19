@@ -34,6 +34,7 @@ urlpatterns = [
     
 
     path('atendence/<str:code>/', views.attendance, name='atendence'),
+    path('attendance_list/', views.attendance_list, name = 'attendance_list'),
 ]
 
 

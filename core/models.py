@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 import qrcode
+from .translit import translit_slug
 from io import BytesIO
 from PIL import Image , ImageDraw
 from django.core.files import File
@@ -57,8 +58,8 @@ class Course(models.Model):
 
 class Student(models.Model):
     class StudentStatus(models.TextChoices):
-        ACTIVE = 'active' , 'активный'
-        ARCHIVED = 'archived', 'архив'
+        ACTIVE = 'active' , 'Активный'
+        ARCHIVED = 'archived', 'Архивный'
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     status = models.CharField(choices=StudentStatus.choices,  max_length=20, verbose_name='Статус')
     phone = models.CharField(max_length=255, verbose_name='Номер телефона')
@@ -74,17 +75,21 @@ class Student(models.Model):
         return self.user.username
     
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make('ыу')
-        canvas = Image.new('RGB', (290, 290), 'white')
+        code = translit_slug()
+
+        qrcode_img = qrcode.make(f"http://127.0.0.1:8000/atendence/{code}")
+        canvas = Image.new('RGB', (350, 350), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
-        fname =f'qr_code-{'xuy'}'+'.png'
+        fname = f'qr_code-{code}.png'
         buffer = BytesIO()
         canvas.save(buffer, 'PNG')
-        self.qr_code.save(fname,File(buffer), save=False)
+        self.qr_code.save(fname, File(buffer), save=False)
+        self.code = code
         canvas.close()
-        super().save(*args, **kwargs)    
+        super().save(*args, **kwargs)
 
+ 
 class Group(models.Model):
     name = models.CharField(max_length=100 , verbose_name = 'Название группы')
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name = 'Преподаватель')
@@ -101,8 +106,13 @@ class Group(models.Model):
         return self.name
 
 class Attendance(models.Model):
-    date = models.DateField()
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
+    date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Посещаемость'
+        verbose_name_plural = 'Посещаемость'
+    
 
 class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)

@@ -9,4 +9,7 @@ def translit_slug():
     while i < 8:
         result += choice(list)
         i += 1
-        return result
+    return result
+    
+
+print(translit_slug())
