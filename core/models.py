@@ -9,6 +9,9 @@ from django.core.files import File
 from django.utils.text import slugify
 from django.http import HttpResponse
 import csv
+import os
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Specialty(models.Model):
     specialty = models.CharField(max_length=100 , verbose_name='Специальность учителя')
@@ -72,6 +75,11 @@ class Student(models.Model):
         return self.user.username
     
     def save(self, *args, **kwargs):
+        if self.pk:
+            old_student = Student.objects.get(pk=self.pk)
+            if old_student.qr_code:
+                os.remove(old_student.qr_code.path)
+                old_student.qr_code.delete(save=False)
         code = translit_slug()
         qrcode_img = qrcode.make(f"http://127.0.0.1:8000/atendence/{code}")
         canvas = Image.new('RGB', (350, 350), 'white')
@@ -84,6 +92,11 @@ class Student(models.Model):
         self.code = code
         canvas.close()
         super().save(*args, **kwargs)
+
+@receiver(post_delete, sender=Student)
+def delete_qr_code(sender, instance, **kwargs):
+        if instance.qr_code:
+            instance.qr_code.delete(False)
 
  
 class Group(models.Model):
@@ -103,7 +116,7 @@ class Group(models.Model):
 
 class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null = True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Посещаемость'

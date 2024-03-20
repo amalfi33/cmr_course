@@ -1,5 +1,4 @@
 
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,9 @@
 </head>
 <body>
 
-
+    {% if not request.user.is_authenticated %}
+    <p style="text-align: center; text-align: center;">Вы не вошли в аккаунт</p>
+    {% else %}
     <div class="container-custom">
         <!-- Sidebar Section -->
         <aside>
@@ -172,6 +173,7 @@
             </div>
 
     </div>
+    {% endif%}
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

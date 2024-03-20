@@ -34,10 +34,16 @@
 	<!-- Favicon  -->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
 </head>
-<body data-spy="scroll" data-target=".fixed-top"
-
-
-   
+<body data-spy="scroll" data-target=".fixed-top">
+    
+    {% if request.user.is_authenticated %}
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px;">
+        <p>Вы вошли в аккаунт.</p>
+        <a href="{% url 'home' %}">
+        <p>Нажмите сюда что бы вернуться </p>
+    </a>
+    </div>
+    {% else %}
 
     <!-- Preloader -->
 	<div class="spinner-wrapper">
@@ -341,5 +347,7 @@
     <script src="{% static 'js/jquery.magnific-popup.js' %}"></script> <!-- Magnific Popup for lightboxes -->
     <script src="{% static 'js/validator.min.js' %}"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="{% static 'js/scripts.js' %}"></script> <!-- Custom scripts -->
+
+    {% endif %}
 </body>
 </html>

@@ -21,7 +21,7 @@
             <tbody>
                 {% for employee in employees %}
                 <tr>
-                    <td>{{ employee.user.first_name }}</td>
+                    <td> <a href="{% url 'profile' request.user.id %}"> {{ employee.user.first_name }}</a></td>
                     <td>{{ employee.user.last_name }}</td>
                     <td>{{ employee.phone }}</td>
                     <td>{{ employee.get_position_display }}</td>

@@ -7,6 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .forms import CourseForm,  EmployeeCreationForm , StudentForm
 import qrcode
 from datetime import datetime
+from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
 from .models import  Course
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -276,6 +277,29 @@ def student_edit(request, student_id):
 # Посещаемость
 def attendance_list(request):
     attendances = Attendance.objects.all()
+    sort_by = request.GET.get('sort_by')
+    if sort_by == 'old_to_new':
+        attendances = attendances.order_by('date')
+    elif sort_by == 'new_to_old':
+        attendances = attendances.order_by('-date')
+    sort_by_letter = request.GET.get('sort_by_letter')
+    if sort_by_letter == 'a_to_z':
+        attendances = attendances.order_by('student__user__last_name')
+    elif sort_by_letter == 'z_to_a':
+        attendances = attendances.order_by('-student__user__last_name')
+
+
+    page_number = request.GET.get('page')
+    paginator = Paginator(attendances, 10)  # 10 записей на странице
+
+    try:
+        attendances = paginator.page(page_number)
+    except PageNotAnInteger:
+        # Если номер страницы не является целым числом, выводим первую страницу
+        attendances = paginator.page(1)
+    except EmptyPage:
+        # Если номер страницы больше максимального, выводим последнюю страницу
+        attendances = paginator.page(paginator.num_pages)
     return render(request, 'attendance_list.html', {'attendances': attendances})
 
 

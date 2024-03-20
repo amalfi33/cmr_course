@@ -4,11 +4,11 @@ from .views import login_site
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('home/', views.home, name='home'),
     path('index/', views.index, name='index'),
     
     path('logout/', views.logout_site, name='logout'),
-    path('login/', views.login_site, name='login'),
+    path('', views.login_site, name='login'),
 
     path('employee_list/', views.employee_list, name='employee_list'),
     path('employee_create/', views.employee_create, name='employee_create'),
