@@ -27,7 +27,7 @@
         <aside>
             <div class="toggle">
                 <div class="logo-custom">
-                    <h2>CRM<span class="danger"> <br> Progress</span></h2>
+                    <h2><b>CRM</b><span class="danger"> <br> <b></b></span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -165,10 +165,16 @@
                 <div class="logo-custom">
 
                     <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-                    
+
+                {% if user.employee %}
+
                     <p>Должность: {{ user.employee.get_position_display }}</p>
-                
                     <p>Номер телефона: {{user.employee.phone}}</p>
+
+                    {% else %}
+                    <p>Номер телефона: {{user.student.phone}}</p>
+
+                {% endif %}
                 </div>
             </div>
 

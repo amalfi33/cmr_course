@@ -53,8 +53,9 @@ def logout_site(request):
 # -----------------------------
 
 # Профиль 
-def profile(request, id):
-    profile = Employee.objects.get(user_id__exact = id)
+def profile(request, student_id, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    student = Student.objects.get(pk=student_id)   
     return render(request, 'profile.html', {'profile': profile})
 # --------------------------
 

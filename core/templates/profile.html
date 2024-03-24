@@ -1,10 +1,12 @@
 {% extends 'index.html' %}
 {% block title %} Профиль {% endblock %}
 {% block content %}
+{% for profile in profiles %}
 <div class="new-users">
 <div class="user-list">
     <h1>{{ user.username }}</h1>
     <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+
     <p>Номер телефона: {{ user.employee.phone }}</p>
     
     <p>Должность: {{ user.employee.get_position_display }}</p>

@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class CourseForm(forms.ModelForm):
     name = forms.CharField(label='Название Курса', required=True, widget=forms.TextInput(attrs={ 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Название"})) 
     description = forms.CharField(label='Описание Курса', required=True, widget=forms.TextInput(attrs={'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Описание"}))
-    price = forms.IntegerField(label='Цена Курса', required=True, widget=forms.NumberInput(attrs={ 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Цена"}))
+    price = forms.IntegerField(label='Цена Курса', required=True, widget=forms.TextInput(attrs={ 'style': 'border: none; border-bottom: 2px solid #D1D1D4; 	background: none; padding: 10px; padding-left: 24px; font-weight: 700; width: 75%; transition: .2s; outline: none; border-bottom-color: #6A679E;    ', 'placeholder': "Цена"}))
 
       
     
