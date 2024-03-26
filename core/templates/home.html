@@ -7,7 +7,6 @@
     <style>
         .ag-format-container {
     width: 1142px;
-    margin: 0 auto;
   }
 
   .ag-courses_box {
@@ -148,10 +147,10 @@
     }
   }
     </style>
-    
     <div class="ag-format-container">
         <div class="ag-courses_box">
             {% for course in courses %}
+            {% if course.status == 'active' %}
           <div class="ag-courses_item">
             
             <a href="#" class="ag-courses-item_link">
@@ -168,15 +167,17 @@
                 </span>
               </div>
             </a>
-            
           </div>
+          {% endif %}
           {% endfor %}
         </div>
+        
       </div>
+      слайдер сделай не забудь
+
+
       
 </main>
 
 
-
-<!-- End of Main Content -->
 {% endblock %}

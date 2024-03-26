@@ -1,0 +1,44 @@
+{% extends 'index.html'%}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+<body>
+    <div style="margin-top: 5rem; display: flex;">
+    <div class="card mb-3" style="max-width: 600px; border-radius: 25px; margin-right: 45px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img style="height: 100%; border-top-left-radius: 25px; border-bottom-left-radius: 25px; " src="{% static 'images/uchenik.jpg'%}" class="card-img" alt="...">
+          </div>
+          <div class="col-md-3">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3" style="max-width: 600px; border-radius: 25px;">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img style="height: 100%; border-top-right-radius: 25px; border-bottom-right-radius: 25px; " src="{% static 'images/uchenik.jpg'%}" class="card-img" alt="...">
+            </div>
+        </div>
+    </div>
+    
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -35,6 +35,7 @@ urlpatterns = [
 
     path('atendence/<str:code>/', views.attendance_create, name='atendence_create'),
     path('attendance_list/', views.attendance_list, name = 'attendance_list'),
+    path('test/', views.create, name ='test'),
 ]
 
 

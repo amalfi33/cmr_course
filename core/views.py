@@ -53,9 +53,8 @@ def logout_site(request):
 # -----------------------------
 
 # Профиль 
-def profile(request, student_id, employee_id):
-    employee = Employee.objects.get(pk=employee_id)
-    student = Student.objects.get(pk=student_id)   
+def profile(request, id):
+    profile = Employee.objects.get(user_id__exact = id)
     return render(request, 'profile.html', {'profile': profile})
 # --------------------------
 
@@ -219,9 +218,11 @@ def course_edit(request, course_id):
         name = request.POST.get('name')
         price = request.POST.get('price')
         description = request.POST.get('description')
+        status = request.POST.get('status')
         course.name = name
         course.price = price
         course.description = description
+        course.status = status
         course.save()
         return redirect('course_list')
     return render(request, 'course_edit.html', {'course': course})
@@ -309,3 +310,6 @@ def attendance_create(request, code):
     attendance = Attendance(student=student)
     attendance.save()
     return redirect(reverse('index'))
+
+def create(request):
+    return render(request, 'test.html')
